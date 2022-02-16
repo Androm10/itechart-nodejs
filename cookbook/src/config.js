@@ -15,7 +15,8 @@ module.exports = {
         dialect : process.env.DB_DIALECT    || "mysql",
         ip : process.env.DB_IP              || "localhost",
         port : process.env.DB_PORT          || "3306",
-    }
+    },
 
+    secret : process.env.SECRET || "secret"
 }
 

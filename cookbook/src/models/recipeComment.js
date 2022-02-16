@@ -31,7 +31,8 @@ let recipeComment = sequelize.define(
         }
     },    
     {
-        tableName : 'r_comments'
+        tableName : 'r_comments',
+        timestamps: false
     }
 );
 

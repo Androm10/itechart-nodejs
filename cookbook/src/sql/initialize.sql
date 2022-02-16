@@ -5,7 +5,7 @@ USE cookbook;
 CREATE TABLE IF NOT EXISTS users (
 id 				SERIAL 			PRIMARY KEY NOT NULL,
 login			VARCHAR(50)		NOT NULL,  
-password 		VARCHAR(50)		NOT NULL,
+password 		VARCHAR(120)		NOT NULL,
 UNIQUE(login)
 );
 
@@ -14,12 +14,13 @@ id 				SERIAL 			PRIMARY KEY NOT NULL,
 user_id			BIGINT			UNSIGNED NOT NULL,
 username		VARCHAR(50)		NOT NULL,
 info			TEXT 			NULL,
-avatar			VARCHAR(255)	NULL
+avatar			VARCHAR(255)	DEFAULT('none') NULL
 );
 
 CREATE TABLE IF NOT EXISTS roles ( 
 id 				SERIAL 			PRIMARY KEY NOT NULL,
-name			VARCHAR(20)		NOT NULL
+name			VARCHAR(20)		NOT NULL,
+UNIQUE(name)
 );
 
 CREATE TABLE IF NOT EXISTS users_roles ( 
@@ -33,16 +34,16 @@ role_id			BIGINT			UNSIGNED NOT NULL
 CREATE TABLE IF NOT EXISTS cookbooks (
 id 				SERIAL 			PRIMARY KEY NOT NULL,
 name			VARCHAR(100)	NOT NULL,
-avatar 			VARCHAR(255),
-decription		TEXT,
+avatar 			VARCHAR(255)	DEFAULT('none'),
+description		TEXT,
 UNIQUE(name)
 );
 
 CREATE TABLE IF NOT EXISTS recipes (
 id 				SERIAL 			PRIMARY KEY NOT NULL,
 name			VARCHAR(100)		NOT NULL,
-avatar 			VARCHAR(255)		NOT NULL,
-decription		TEXT,
+avatar 			VARCHAR(255)		DEFAULT('none') NOT NULL,
+description		TEXT,
 directions		TEXT,
 ingridients		TEXT				NOT NULL,
 cooking_time	INT

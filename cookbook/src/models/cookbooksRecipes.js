@@ -21,7 +21,8 @@ let cookbooksRecipes = sequelize.define(
         },
     },
     {
-        tableName : 'cookbooks_recipes'
+        tableName : 'cookbooks_recipes',
+        timestamps: false
     }
 );
 

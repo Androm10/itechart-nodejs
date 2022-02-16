@@ -17,12 +17,13 @@ let user = sequelize.define(
             unique: true
         },
         password: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(120),
             allowNull: false
         }       
     },
     {
-        tableName : 'users'
+        tableName : 'users',
+        timestamps: false
     }
 );
 

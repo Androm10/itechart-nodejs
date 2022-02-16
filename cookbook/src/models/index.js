@@ -6,12 +6,12 @@ let cookbook        = require('./cookbook');
 let recipe          = require('./recipe');
 let cookbooksRecipes= require('./cookbooksRecipes')
 
-let cookbookComment = require('./cookbook');
-let recipeComment   = require('./recipe');
-let cookbookLike    = require('./cookbook');
-let recipeLike      = require('./recipe');
-let cookbookView    = require('./cookbook');
-let recipeView      = require('./recipe');
+let cookbookComment = require('./cookbookComment');
+let recipeComment   = require('./recipeComment');
+let cookbookLike    = require('./cookbookLike');
+let recipeLike      = require('./recipeLike');
+let cookbookView    = require('./cookbookView');
+let recipeView      = require('./recipeView');
 
 
 user.hasOne(userInfo, {foreignKey : 'userId'});

@@ -23,7 +23,8 @@ let recipeView = sequelize.define(
         },
     },    
     {
-        tableName : 'r_views'
+        tableName : 'r_views',
+        timestamps: false
     }
 );
 

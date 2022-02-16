@@ -17,14 +17,16 @@ let cookbook = sequelize.define(
             unique: true,
         },
         avatar : {
-            type: DataTypes.STRING(255)
+            type: DataTypes.STRING(255),
+            default: 'none'
         },
         description : {
             type : DataTypes.TEXT
         }
     },
     {
-        tableName : 'cookbooks'
+        tableName : 'cookbooks',
+        timestamps: false
     }
 );
 

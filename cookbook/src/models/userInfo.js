@@ -23,14 +23,16 @@ let userInfo = sequelize.define(
             unique: true
         },       
         avatar : {
-            type: DataTypes.STRING(255)
+            type: DataTypes.STRING(255),
+            default: 'none'
         },
         info : {
             type : DataTypes.TEXT
         }      
     },
     {
-        tableName : 'user_info'
+        tableName : 'user_info',
+        timestamps: false
     }
 );
 

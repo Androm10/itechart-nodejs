@@ -23,7 +23,8 @@ let cookbookView = sequelize.define(
         },
     },    
     {
-        tableName : 'c_views'
+        tableName : 'c_views',
+        timestamps: false
     }
 );
 

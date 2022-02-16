@@ -23,7 +23,8 @@ let cookbookLike = sequelize.define(
         },
     },    
     {
-        tableName : 'c_likes'
+        tableName : 'c_likes',
+        timestamps: false
     }
 );
 

@@ -17,7 +17,8 @@ let recipe = sequelize.define(
             unique: true,
         },
         avatar : {
-            type: DataTypes.STRING(255)
+            type: DataTypes.STRING(255),
+            default: 'none'
         },
         description : {
             type : DataTypes.TEXT
@@ -29,12 +30,13 @@ let recipe = sequelize.define(
             type : DataTypes.TEXT
         },
         cookingTime : {
-            type : DataTypes.TIME,
+            type : DataTypes.INTEGER,
             field : 'cooking_time'
         }
     },
     {
-        tableName : 'recipes'
+        tableName : 'recipes',
+        timestamps: false
     }
 );
 

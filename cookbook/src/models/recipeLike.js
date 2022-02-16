@@ -23,7 +23,8 @@ let recipeLike = sequelize.define(
         },
     },    
     {
-        tableName : 'r_likes'
+        tableName : 'r_likes',
+        timestamps: false
     }
 );
 

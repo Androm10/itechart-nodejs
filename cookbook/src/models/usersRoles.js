@@ -18,13 +18,13 @@ let usersRoles = sequelize.define(
         },
         roleId: {
             type: DataTypes.BIGINT.UNSIGNED,
-            primaryKey: true,
             allowNull: false,
             field: 'role_id'
         },      
     },
     {
-        tableName : 'users_roles'
+        tableName : 'users_roles',
+        timestamps: false
     }
 );
 

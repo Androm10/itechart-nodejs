@@ -13,11 +13,14 @@ let role = sequelize.define(
         },       
         name: {
             type: DataTypes.CHAR(50),
+            unique: true,
             allowNull: false
+            
         }
     },
     {
-        tableName : 'roles'
+        tableName : 'roles',
+        timestamps: false
     }
 );
 

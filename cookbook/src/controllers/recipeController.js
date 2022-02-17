@@ -21,7 +21,7 @@ module.exports = {
 
     getById : async function(req, res, next) {
         
-        let response = await recipeService.getById(req.params.id);
+        let response = await recipeService.getById(req.user.id, req.params.id);
 
         res.status(200).json({ type: 'success', body: response});
 

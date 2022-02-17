@@ -1,4 +1,5 @@
 const recipeRepository = require('../repository/recipeRepository');
+const viewService = require('./viewService');
 
 module.exports = {
 
@@ -9,9 +10,12 @@ module.exports = {
 
     },
 
-    getById : async function(recipeId) {
+    getById : async function(userId, recipeId) {
 
         let recipe = await recipeRepository.getById(recipeId);
+        
+        viewService.addViewToRecipe(userId, recipeId);
+
         return recipe;
 
     },

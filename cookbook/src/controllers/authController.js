@@ -28,8 +28,8 @@ module.exports = {
         }
        
       
-        let token = await authService.login(user);
-        res.status(200).json(token);
+        let tokens = await authService.login(user);
+        res.status(200).json(tokens);
 
     }
 

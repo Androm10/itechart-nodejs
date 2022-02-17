@@ -16,11 +16,18 @@ module.exports = {
             throw(buildError(400, 'Login or password is incorrect'));
 
 
-        let token = jwt.sign({
+        let accessToken = jwt.sign({
             userId : user.id,
-            exp: Math.floor(Date.now() / 1000) + (60 * 60) 
+            refresh : false,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60) //1h
         }, config.secret);
 
-        return {token: token};    
+        let refreshToken = jwt.sign({
+            userId : user.id,
+            refresh : true,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) //1d
+        }, config.secret);
+
+        return {accessToken, refreshToken};    
     }
 }

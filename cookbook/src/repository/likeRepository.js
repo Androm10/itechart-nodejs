@@ -5,6 +5,11 @@ module.exports = {
 
     async addLikeToRecipe(userId, recipeId) {
 
+        let existedLike = await models.recipeLike.findOne({where : {userId, recipeId}});
+
+        if(existedLike)
+            throw(new Error('already have like on this recipe'));
+
         let user = await models.user.findByPk(userId);
 
         if(!user)
@@ -15,13 +20,17 @@ module.exports = {
         if(!recipe)
             throw(new Error('no such recipe'));
 
-        let like = await user.createRecipeLike(recipe);
-
+        let like = await models.recipeLike.create({userId : user.id, recipeId : recipe.id});
         return like;
 
     }, 
 
     async addLikeToCookbook(userId, cookbookId) {
+
+        let existedLike = await models.cookbookLike.findOne({where : {userId, cookbookId}});
+
+        if(existedLike)
+            throw(new Error('already have like on this cookbook'));
 
         let user = await models.user.findByPk(userId);
 
@@ -33,7 +42,7 @@ module.exports = {
         if(!cookbook)
             throw(new Error('no such cookbook'));
 
-        let like = await user.createCookbookLike(cookbook);
+        let like = await models.cookbookLike.create({userId : user.id, cookbookId : cookbook.id});
 
         return like;
        

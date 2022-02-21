@@ -13,7 +13,7 @@ module.exports = {
         if(existentUser)
             throw(new Error('such login already exist'));
 
-        let user = await models.user.create( {login: data.login, password: data.password});
+        let user = await models.user.create( {login: data.login, password: data.password, status: 'active'});
         
 
         user.createUserInfo({ username: data.username});
@@ -45,6 +45,16 @@ module.exports = {
             throw(new Error('no such user'));
 
         return user;
+
+    },
+
+    updateProfile : async function(userId, profile) {
+
+        let userInfo = await models.userInfo.findOne({where : {userId}});
+
+        await userInfo.update(profile);
+
+        return userInfo;
 
     }
 

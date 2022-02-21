@@ -1,4 +1,4 @@
-const likeService = require('../services/viewService');
+const likeService = require('../services/likeService');
 
 
 module.exports = {

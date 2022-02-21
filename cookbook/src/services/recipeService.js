@@ -20,9 +20,9 @@ module.exports = {
 
     },
 
-    getAll : async function() {
+    getAll : async function(filter) {
 
-        let recipes = await recipeRepository.getAll();
+        let recipes = await recipeRepository.getAll(filter);
         return recipes;
 
     },

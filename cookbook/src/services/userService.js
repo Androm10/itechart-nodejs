@@ -21,6 +21,13 @@ module.exports = {
         let user = await userRepository.getByLogin(login);
         return user;
     
+    },
+
+    updateProfile : async function(userId, profile) {
+        
+        let updatedProfile = await userRepository.updateProfile(userId, profile);
+        return updatedProfile;
+
     }
 
 }

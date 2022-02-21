@@ -1,4 +1,4 @@
-const viewRepository = require('../services/viewRepository');
+const viewRepository = require('../repository/viewRepository');
 
 
 module.exports = {

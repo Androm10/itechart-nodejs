@@ -1,3 +1,4 @@
+const sortTypes = require('../config').sortTypes;
 const recipeService = require('../services/recipeService');
 
 
@@ -29,7 +30,22 @@ module.exports = {
 
     getAll : async function(req, res, next) {
         
-        let response = await recipeService.getAll();
+        let filter = {
+            sort : req.query['sort'] || "none",
+            cookingTimeFrom : req.query.cookingTimeFrom || "any",
+            cookingTimeTo : req.query.cookingTimeTo || "any"
+        }
+
+        if(filter.cookingTimeFrom < 0 )
+            filter.cookingTimeFrom = 'any';
+        
+        if(filter.cookingTimeTo < 0)
+            filter.cookingTimeTo = 'any';
+
+        if(!sortTypes.includes(filter.sort))
+            filter.sort = 'none';
+
+        let response = await recipeService.getAll(filter);
 
         res.status(200).json({ type: 'success', body: response});
 

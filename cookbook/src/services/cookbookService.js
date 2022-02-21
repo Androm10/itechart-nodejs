@@ -14,15 +14,16 @@ module.exports = {
 
         let cookbook = await cookbookRepository.getById(cookbookId);
 
-        viewService.addViewToCookbook(userId,cookbookId);
+        viewService.addViewToCookbook(userId, cookbookId);
 
         return cookbook;
 
     },
 
-    getAll : async function() {
+    getAll : async function(filter) {
 
-        let cookbooks = await cookbookRepository.getAll();
+        let cookbooks = await cookbookRepository.getAll(filter);
+
         return cookbooks;
 
     },
@@ -30,6 +31,7 @@ module.exports = {
     deleteById : async function(cookbookId) {
 
         let cookbook = await cookbookRepository.deleteById(cookbookId);
+
         return cookbook;
 
     },
@@ -37,10 +39,25 @@ module.exports = {
     updateById : async function(cookbookId, data) {
 
         let cookbook = await cookbookRepository.updateById(cookbookId, data);
+
         return cookbook;
 
     },
 
+    linkRecipe : async function(cookbookId, recipeId) {
 
+        let link = await cookbookRepository.linkRecipe(cookbookId, recipeId);
+
+        return link;
+
+    },
+
+    unlinkRecipe : async function(cookbookId, recipeId) {
+
+        let link = await cookbookRepository.unlinkRecipe(cookbookId, recipeId);
+
+        return link;
+
+    }
 
 }

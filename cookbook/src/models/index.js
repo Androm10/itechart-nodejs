@@ -42,3 +42,11 @@ recipe.belongsToMany(user, {through: recipeView, foreignKey: 'recipeId', otherKe
 
 user.belongsToMany(recipe, {through: recipeLike, foreignKey: 'userId', otherKey: 'recipeId'});
 recipe.belongsToMany(user, {through: recipeLike, foreignKey: 'recipeId', otherKey: 'userId'});
+
+recipe.hasMany(recipeView, {foreignKey: 'recipeId'});
+recipe.hasMany(recipeLike, {foreignKey: 'recipeId'});
+
+cookbook.hasMany(cookbookView, {foreignKey: 'cookbookId'});
+cookbook.hasMany(cookbookView, {foreignKey: 'cookbookId'});
+
+

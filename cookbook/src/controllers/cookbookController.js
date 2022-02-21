@@ -27,7 +27,13 @@ module.exports = {
 
     getAll : async function(req, res, next) {
         
-        let response = await cookbookService.getAll();
+        let filter = {
+            sort : req.query['sort'] || "none",
+            type : req.query.type || "any"
+        }
+
+
+        let response = await cookbookService.getAll(filter);
 
         res.status(200).json({ type: 'success', body: response});
 
@@ -52,6 +58,20 @@ module.exports = {
         let response = await cookbookService.updateById(req.params.id, cookbook);
         
         res.status(200).json({ type: 'success', body: response });
-    }
+    },
+
+    linkRecipe : async function(req, res, next) {
+
+        let response = await cookbookService.linkRecipe(req.params.id, req.params.recipeId);
+
+        res.status(200).json({ type: 'success', body: response });
+    },
+
+    unlinkRecipe : async function(req, res, next) {
+
+        let response = await cookbookService.unlinkRecipe(req.params.id, req.params.recipeId);
+
+        res.status(200).json({ type: 'success', body: response });
+    },
 
 }

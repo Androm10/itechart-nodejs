@@ -19,7 +19,11 @@ let user = sequelize.define(
         password: {
             type: DataTypes.STRING(120),
             allowNull: false
-        }       
+        },
+        status: {
+            type: DataTypes.STRING(20),
+            allowNull: false
+        }      
     },
     {
         tableName : 'users',

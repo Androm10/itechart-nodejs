@@ -19,9 +19,6 @@ passport.use(new JWTStrategy(options, function(jwt_payload, done) {
         if(!user) 
             return done(null, false);
 
-        if(jwt_payload.refresh)
-            res.redirect('/login');
-
         return done(null, user);
     })
     .catch( (error) => {

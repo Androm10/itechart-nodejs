@@ -1,4 +1,4 @@
-const likeRepository = require('../services/likeRepository');
+const likeRepository = require('../repository/likeRepository');
 
 
 module.exports = {

@@ -5,6 +5,8 @@ const passport = require('./src/passport');
 const authRouter = require('./src/routers/authRouter');
 const recipeRouter = require('./src/routers/recipeRouter');
 const cookbookRouter = require('./src/routers/cookbookRouter');
+const userRouter = require('./src/routers/userRouter');
+const userActionsRouter = require('./src/routers/userActionsRouter');
 
 const errorHandler = require('./src/middlewares/errorHandler');
 const authorize = require('./src/middlewares/authorize');
@@ -19,6 +21,9 @@ app.use('/', authRouter);
 app.use(authorize);
 app.use('/recipe', recipeRouter);
 app.use('/cookbook', cookbookRouter);
+app.use('/user', userRouter);
+app.use('/userActions', userActionsRouter);
+
 
 app.use(errorHandler);
 

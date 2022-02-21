@@ -5,7 +5,8 @@ USE cookbook;
 CREATE TABLE IF NOT EXISTS users (
 id 				SERIAL 			PRIMARY KEY NOT NULL,
 login			VARCHAR(50)		NOT NULL,  
-password 		VARCHAR(120)		NOT NULL,
+password 		VARCHAR(120)	NOT NULL,
+status			VARCHAR(20)		NOT NULL,
 UNIQUE(login)
 );
 

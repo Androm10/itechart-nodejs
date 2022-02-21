@@ -15,7 +15,7 @@ module.exports = {
         if(!recipe)
             throw(new Error('no such recipe'));
 
-        let view = await user.createRecipeView(recipe);
+        let view = await models.recipeView.create({ userId: user.id, recipeId : recipe.id});
 
         return view;
 
@@ -33,7 +33,7 @@ module.exports = {
         if(!cookbook)
             throw(new Error('no such cookbook'));
 
-        let view = await user.createCookbookView(cookbook);
+        let view = await models.cookbookView.create({ userId: user.id, cookbookId : cookbook.id});
 
         return view;
        

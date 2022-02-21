@@ -1,7 +1,7 @@
 class Shape {
     
     constructor(name) {
-        this.name = name;
+        this.name = String(name);
     }
     
 };
@@ -10,8 +10,8 @@ class Rectangle extends Shape {
 
     constructor(name, width, height) {
         super(name);
-        this.width = width;
-        this.height = height;
+        this.width = Number.parseFloat(width);
+        this.height = Number.parseFloat(height);
     }
 
     get Perimeter() {
@@ -27,7 +27,7 @@ class Rectangle extends Shape {
 class Square extends Shape {
     constructor(name, sideLength) {
         super(name);
-        this.sideLength = sideLength;
+        this.sideLength = Number.parseFloat(sideLength);
     }
 
     get Perimeter() {
@@ -48,7 +48,6 @@ class ShapesStore extends Array{
         for( let i =0; i<this.length; i++) {
             
             if(this[i] instanceof Rectangle) {
-                console.log(this[i].name);
                 sum+= this[i].Perimeter;
             }
 

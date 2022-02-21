@@ -4,6 +4,9 @@ function incr(a) {
 
 function memoizator(fn) {
 
+    if(typeof fn !== 'function')
+        throw(new Error(fn + " is not a function!"));
+
     let cache = {};
 
     return (value) => {

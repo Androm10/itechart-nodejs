@@ -1,6 +1,12 @@
 
 function linear(array, callback, initialValue) {
 
+    if(!Array.isArray(array))
+        return;
+
+    if(!callback)
+        return array;
+
     let i;
     let prev;
 

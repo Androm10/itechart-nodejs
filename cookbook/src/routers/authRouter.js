@@ -12,4 +12,6 @@ router.post('/signup', validate(authSchema), async(authController.signup));
 
 router.post('/login', async(authController.login) );
 
+router.post('/grantNewTokens', async(authController.grantNewTokens));
+
 module.exports = router;

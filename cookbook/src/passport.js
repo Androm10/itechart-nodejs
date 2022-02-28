@@ -12,12 +12,15 @@ let options = {
 
 passport.use(new JWTStrategy(options, function(jwt_payload, done) {
 
-            //note: add jwt blacklist parser
-
     userService.getById(jwt_payload.userId)
     .then( (user) => {
-        if(!user) 
+
+        if(!user ) 
             return done(null, false);
+        
+        if(jwt_payload.refresh) {
+            return done(null, false);
+        }
 
         return done(null, user);
     })

@@ -2,6 +2,9 @@ let express = require('express');
 const app = express();
 const passport = require('./src/passport');
 
+const { startAllJobs } = require('./src/jobs/');
+
+
 const authRouter = require('./src/routers/authRouter');
 const recipeRouter = require('./src/routers/recipeRouter');
 const cookbookRouter = require('./src/routers/cookbookRouter');
@@ -24,8 +27,9 @@ app.use('/cookbook', cookbookRouter);
 app.use('/user', userRouter);
 app.use('/userActions', userActionsRouter);
 
-
 app.use(errorHandler);
+
+
 
 startListening();
 
@@ -34,7 +38,7 @@ function startListening() {
         app.listen(3000, () => {
             
             console.log("start listening");
-
+            startAllJobs();
         })
     }
     catch(error) {

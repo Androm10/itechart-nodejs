@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const sequelize = require('../database');
 
 const models = require('../database').models;
 
@@ -30,11 +31,33 @@ module.exports = {
 
         let options = { where: {} };
 
+        switch( filter.sort) {
+            case 'popularity' : {
+                options.attributes = ['id', 'name', 'avatar', 'description'];
+                options.include = {model: models.cookbookView, attributes: []};
+                options.order = [
+                    sequelize.literal('COUNT(cookbookViews.id) DESC')
+                ];
+                options.group = 'id';
+                break;
+            } 
+            case 'likes' : {
+                options.attributes = ['id', 'name', 'avatar', 'description'];
+                options.include = {model: models.cookbookLike, attributes: []};
+                options.order = [
+                    sequelize.literal('COUNT(cookbookLikes.id) DESC')
+                ];
+                options.group = 'id';
+                break;
+            }
+            default : {}
+        }
+
 
         if(filter.type != 'any') {
 
             options.where[Op.and] = [];
-            
+        
             filter.type.split(',').forEach( (item) => {
                 options.where[Op.and].push({ 
                     description : {
@@ -44,8 +67,6 @@ module.exports = {
             });
 
         }
-
-        
 
         let cookbooks = await models.cookbook.findAll(options);
         

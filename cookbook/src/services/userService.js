@@ -1,8 +1,11 @@
 const userRepository = require('../repository/userRepository');
+const crypt = require('../utils/crypt');
 
 module.exports = {
 
     addUser : async function(data) {
+
+        data.password = await crypt.cryptPassword(data.password);
 
         let user = await userRepository.addUser(data);
         return user;
@@ -28,6 +31,24 @@ module.exports = {
         let updatedProfile = await userRepository.updateProfile(userId, profile);
         return updatedProfile;
 
+    },
+
+    changePassword : async function(userId, passwords) {
+
+        let user = await userRepository.getById(userId);
+
+        if(!user)
+            throw(new Error('No such user'));
+
+        if(!crypt.comparePassword(passwords.oldPassword, user.password)) {
+            throw(new Error('Password cannot be changed'));
+        }
+
+        let hashedPassword = await crypt.cryptPassword(passwords.newPassword);
+
+        await user.update({ password :  hashedPassword});
+
+        return user;
     }
 
 }

@@ -5,9 +5,6 @@ module.exports = {
     
     addUser : async function(data) {
         
-        data.password = await crypt.cryptPassword(data.password);
-
-
         let existentUser = await models.user.findOne( {where : { login: data.login}} );
 
         if(existentUser)

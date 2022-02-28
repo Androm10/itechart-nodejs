@@ -19,6 +19,8 @@ module.exports = {
 
     secret : process.env.SECRET || "secret",
 
+    jwtBlacklist : __dirname + '/../jwtBlacklist.txt',
+
     sortTypes : [
         'popularity',
         'likes',

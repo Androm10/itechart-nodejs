@@ -16,6 +16,17 @@ module.exports = {
 
     },
 
-    
+    changePassword : async function(req, res, next) {
+
+        let passwords = {
+            oldPassword : req.body.oldPassword,
+            newPassword : req.body.newPassword
+        }
+
+        let response = await userService.changePassword(req.user.id, passwords);
+
+        res.status(201).json({ type: 'success', body: response});
+
+    }
 
 }

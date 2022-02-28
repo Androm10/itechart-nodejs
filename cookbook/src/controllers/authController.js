@@ -31,6 +31,18 @@ module.exports = {
         let tokens = await authService.login(user);
         res.status(200).json(tokens);
 
+    },
+
+    grantNewTokens : async function(req, res, next) {
+
+
+        if(!req.body.refreshToken)
+            throw(new Error('invalid token'))
+
+        let tokens = await authService.grantNewTokens(req.body.refreshToken);
+
+        res.status(200).json(tokens);
+
     }
 
 }

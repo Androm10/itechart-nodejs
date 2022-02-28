@@ -47,6 +47,6 @@ recipe.hasMany(recipeView, {foreignKey: 'recipeId'});
 recipe.hasMany(recipeLike, {foreignKey: 'recipeId'});
 
 cookbook.hasMany(cookbookView, {foreignKey: 'cookbookId'});
-cookbook.hasMany(cookbookView, {foreignKey: 'cookbookId'});
+cookbook.hasMany(cookbookLike, {foreignKey: 'cookbookId'});
 
 

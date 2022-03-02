@@ -7,7 +7,7 @@ module.exports = {
 
         let response = await viewService.addViewToRecipe(req.user.id, req.params.id);
 
-        res.status(200).json(response);
+        res.status(201).json(response);
 
     }, 
 
@@ -15,7 +15,7 @@ module.exports = {
 
         let response = await viewService.addViewToCookbook(req.user.id, req.params.id);
 
-        res.status(200).json(response);
+        res.status(201).json(response);
 
     }
 

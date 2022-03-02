@@ -104,6 +104,7 @@ module.exports = {
 
         listStream.pipe(cleaningStream).pipe(newListStream);
 
+        
         setTimeout(async () => {
 
             await fs.promises.rm(path);

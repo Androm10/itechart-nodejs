@@ -28,6 +28,11 @@ let recipeComment = sequelize.define(
         rate : {
             type : DataTypes.SMALLINT,
             allowNull : false
+        },
+        createdAt : {
+            type : DataTypes.DATE,
+            allowNull : true,
+            field : 'created_at'
         }
     },    
     {

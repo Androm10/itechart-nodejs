@@ -33,6 +33,8 @@ cookbook.belongsToMany(user, {through: cookbookView, foreignKey: 'cookbookId', o
 user.belongsToMany(cookbook, {through: cookbookLike, foreignKey: 'userId', otherKey: 'cookbookId'});
 cookbook.belongsToMany(user, {through: cookbookLike, foreignKey: 'cookbookId', otherKey: 'userId'});
 
+user.hasMany(cookbook, { foreignKey: 'creatorId'});
+cookbook.belongsTo(user, { foreignKey: 'creatorId'});
 
 user.belongsToMany(recipe, {through: recipeComment, foreignKey: 'userId', otherKey: 'recipeId'});
 recipe.belongsToMany(user, {through: recipeComment, foreignKey: 'recipeId', otherKey: 'userId'});
@@ -42,6 +44,10 @@ recipe.belongsToMany(user, {through: recipeView, foreignKey: 'recipeId', otherKe
 
 user.belongsToMany(recipe, {through: recipeLike, foreignKey: 'userId', otherKey: 'recipeId'});
 recipe.belongsToMany(user, {through: recipeLike, foreignKey: 'recipeId', otherKey: 'userId'});
+
+user.hasMany(recipe, { foreignKey: 'creatorId'});
+recipe.belongsTo(user, { foreignKey: 'creatorId'});
+
 
 recipe.hasMany(recipeView, {foreignKey: 'recipeId'});
 recipe.hasMany(recipeLike, {foreignKey: 'recipeId'});

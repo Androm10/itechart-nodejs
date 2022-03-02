@@ -41,6 +41,23 @@ module.exports = {
 
     },
 
+    cloneRecipe : async function(userId, recipeId) {
+
+        let recipe = await recipeRepository.getById(recipeId);
+
+        let cloned = {
+            name : recipe.name,
+            description : recipe.description,
+            directions : recipe.directions,
+            ingridients : recipe.ingridients,
+            cookingTime : recipe.cookingTime,
+            creatorId : userId
+        }
+
+        let result = await recipeRepository.addRecipe(cloned);
+
+        return result;
+    }
 
 
 }

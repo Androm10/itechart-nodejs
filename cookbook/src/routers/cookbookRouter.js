@@ -12,9 +12,11 @@ router.get('/:id', async(cookbookController.getById));
 router.get('/', async(cookbookController.getAll));
 
 router.delete('/:id', async(cookbookController.deleteById));
+
+router.patch('/cloneCookbook/:id', async(cookbookController.cloneCookbook));
+
 //add/delete recipe from cookbook
 router.patch('/:id/linkRecipe/:recipeId', async(cookbookController.linkRecipe));
-
 router.patch('/:id/unlinkRecipe/:recipeId', async(cookbookController.unlinkRecipe));
 
 

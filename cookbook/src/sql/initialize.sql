@@ -34,19 +34,20 @@ role_id			BIGINT			UNSIGNED NOT NULL
 
 CREATE TABLE IF NOT EXISTS cookbooks (
 id 				SERIAL 			PRIMARY KEY NOT NULL,
+creator_id		BIGINT			UNSIGNED NOT NULL,
 name			VARCHAR(100)	NOT NULL,
 avatar 			VARCHAR(255)	DEFAULT('none'),
 description		TEXT,
-UNIQUE(name)
 );
 
 CREATE TABLE IF NOT EXISTS recipes (
 id 				SERIAL 			PRIMARY KEY NOT NULL,
-name			VARCHAR(100)		NOT NULL,
-avatar 			VARCHAR(255)		DEFAULT('none') NOT NULL,
+creator_id		BIGINT			UNSIGNED NOT NULL,
+name			VARCHAR(100)	NOT NULL,
+avatar 			VARCHAR(255)	DEFAULT('none') NOT NULL,
 description		TEXT,
 directions		TEXT,
-ingridients		TEXT				NOT NULL,
+ingridients		TEXT			NOT NULL,
 cooking_time	INT
 );
 

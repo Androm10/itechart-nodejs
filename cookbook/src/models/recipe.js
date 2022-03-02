@@ -10,7 +10,12 @@ let recipe = sequelize.define(
             allowNull: false,
             unique: true,
             autoIncrement: true
-        },       
+        }, 
+        creatorId : {
+            type: DataTypes.BIGINT.UNSIGNED,
+            allowNull: false,
+            field: 'creator_id'
+        },
         name: {
             type: DataTypes.CHAR(100),
             allowNull: false,

@@ -58,6 +58,21 @@ module.exports = {
 
         return link;
 
+    },
+
+    cloneCookbook : async function(userId, cookbookId) {
+
+        let cookbook = await cookbookRepository.getById(cookbookId);
+
+        let cloned = {
+            name : cookbook.name,
+            description : cookbook.description,
+            creatorId : userId
+        }
+
+        let result = await cookbookRepository.addCookbook(cloned);
+
+        return result;
     }
 
 }

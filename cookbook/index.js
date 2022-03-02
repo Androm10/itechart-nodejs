@@ -9,7 +9,7 @@ const authRouter = require('./src/routers/authRouter');
 const recipeRouter = require('./src/routers/recipeRouter');
 const cookbookRouter = require('./src/routers/cookbookRouter');
 const userRouter = require('./src/routers/userRouter');
-const userActionsRouter = require('./src/routers/userActionsRouter');
+const likeRouter = require('./src/routers/likeRouter');
 const commentRouter = require('./src/routers/commentRouter');
 
 const errorHandler = require('./src/middlewares/errorHandler');
@@ -26,7 +26,7 @@ app.use(authorize);
 app.use('/recipe', recipeRouter);
 app.use('/cookbook', cookbookRouter);
 app.use('/user', userRouter);
-app.use('/userActions', userActionsRouter);
+app.use('/like', likeRouter);
 app.use('/comment', commentRouter);
 
 app.use(errorHandler);

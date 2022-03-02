@@ -13,6 +13,8 @@ router.get('/', async(recipeController.getAll));
 
 router.delete('/:id', async(recipeController.deleteById));
 
+router.patch('/cloneRecipe/:id', async(recipeController.cloneRecipe));
+
 router.use(validate(recipeSchema));
 router.put('/:id', async(recipeController.updateById));
 

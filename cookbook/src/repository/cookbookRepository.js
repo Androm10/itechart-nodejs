@@ -7,11 +7,6 @@ module.exports = {
 
     addCookbook : async function(data) {
 
-        let cookbook = await models.cookbook.findOne( {where : { name: data.name}}) ;
-
-        if(cookbook)
-            throw(new Error('cookbook with such name already exists'));
-
         return await models.cookbook.create(data);
 
     },
@@ -33,7 +28,7 @@ module.exports = {
 
         switch( filter.sort) {
             case 'popularity' : {
-                options.attributes = ['id', 'name', 'avatar', 'description'];
+                options.attributes = ['id', 'name', 'avatar', 'description', 'creatorId'];
                 options.include = {model: models.cookbookView, attributes: []};
                 options.order = [
                     sequelize.literal('COUNT(cookbookViews.id) DESC')
@@ -42,7 +37,7 @@ module.exports = {
                 break;
             } 
             case 'likes' : {
-                options.attributes = ['id', 'name', 'avatar', 'description'];
+                options.attributes = ['id', 'name', 'avatar', 'description', 'creatorId'];
                 options.include = {model: models.cookbookLike, attributes: []};
                 options.order = [
                     sequelize.literal('COUNT(cookbookLikes.id) DESC')

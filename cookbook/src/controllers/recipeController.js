@@ -11,7 +11,8 @@ module.exports = {
             description : req.body.description,
             directions: req.body.directions,
             ingridients: req.body.ingridients,
-            cookingTime: req.body.cookingTime
+            cookingTime: req.body.cookingTime,
+            creatorId : req.user.id
         }
 
         let response = await recipeService.addRecipe(recipe);
@@ -72,6 +73,13 @@ module.exports = {
 
         let response = await recipeService.updateById(req.params.id, data);
         
+        res.status(200).json({ type: 'success', body: response });
+    },
+
+    cloneRecipe : async function(req, res, next) {
+
+        let response = await recipeService.cloneRecipe(req.user.id, req.params.id);
+
         res.status(200).json({ type: 'success', body: response });
     }
 

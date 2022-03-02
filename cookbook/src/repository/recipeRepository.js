@@ -41,7 +41,7 @@ module.exports = {
         
        switch( filter.sort) {
            case 'popularity' : {
-               options.attributes = ['id', 'name', 'avatar', 'description', 'directions', 'ingridients', 'cookingTime'];
+               options.attributes = ['id', 'name', 'avatar', 'description', 'directions', 'ingridients', 'cookingTime', 'creatorId'];
                options.include = { model: models.recipeView, attributes : [] };
                options.order = [
                    sequelize.literal('COUNT(recipeViews.id) DESC')
@@ -50,7 +50,7 @@ module.exports = {
                break;
            } 
            case 'likes' : {
-               options.attributes = ['id', 'name', 'avatar', 'description', 'directions', 'ingridients', 'cookingTime'];
+               options.attributes = ['id', 'name', 'avatar', 'description', 'directions', 'ingridients', 'cookingTime', 'creatorId'];
                options.include = {model: models.recipeLike, attributes : []};
                options.order = [
                    sequelize.literal('COUNT(recipeLikes.id) DESC')

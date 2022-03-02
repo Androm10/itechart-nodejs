@@ -10,11 +10,15 @@ let cookbook = sequelize.define(
             allowNull: false,
             unique: true,
             autoIncrement: true
+        },
+        creatorId: {
+            type: DataTypes.BIGINT.UNSIGNED,
+            allowNull: false,
+            field: 'creator_id'
         },       
         name: {
             type: DataTypes.CHAR(100),
-            allowNull: false,
-            unique: true,
+            allowNull: false
         },
         avatar : {
             type: DataTypes.STRING(255),

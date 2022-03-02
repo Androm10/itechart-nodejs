@@ -1,4 +1,3 @@
-
 const cookbookService = require('../services/cookbookService');
 
 
@@ -9,6 +8,7 @@ module.exports = {
         let cookbook = {
             name : req.body.name,
             description : req.body.description,
+            creatorId : req.user.id
         }
 
         let response = await cookbookService.addCookbook(cookbook);
@@ -73,5 +73,12 @@ module.exports = {
 
         res.status(200).json({ type: 'success', body: response });
     },
+
+    cloneCookbook : async function(req, res, next) {
+
+        let response = await cookbookService.cloneCookbook(req.user.id, req.params.id);
+
+        res.status(200).json({ type: 'success', body: response });
+    }
 
 }

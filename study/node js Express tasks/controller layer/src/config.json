@@ -1,0 +1,4 @@
+{
+    "business-layer-url" : "http://localhost:3307/",
+    "secret" : "secret"
+}

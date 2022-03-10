@@ -5,19 +5,16 @@ const cardController = require('../controllers/cardController');
 
 const async = require('../utils/async');
 
-const validate = require('../middlewares/validate');
-const cardSchema = require('../schemas/cardSchema');
-
 
 router.get('/', async(cardController.getAll));
 
-router.post('/', validate(cardSchema), async(cardController.create));
+router.post('/', async(cardController.create));
 
 router.get('/:id', async(cardController.getById));
 
 router.delete('/:id', async(cardController.deleteById));
 
-router.put('/:id', validate(cardSchema), async(cardController.updateById));
+router.put('/:id', async(cardController.updateById));
 
 
 

@@ -1,4 +1,4 @@
-const cardService = require('../services/http/cardService');
+const cardService = require('../services/cardService');
 
 const cardController = {
     
@@ -7,7 +7,7 @@ const cardController = {
         let data = {
             name : req.body.name,
             description : req.body.description,
-            createAt : req.body.createAt,
+            createAt : Date.now(),
             estimate : req.body.estimate,
             status : req.body.status,
             dueDate : req.body.dueDate,

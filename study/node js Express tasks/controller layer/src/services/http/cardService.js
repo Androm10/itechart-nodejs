@@ -1,11 +1,16 @@
-let axios = require('axios').default;
-let url = require('../../config.json')['business-layer-url'];
+let url = require('../../config').businessLayerUrl;
+
+let axios = require('axios').create({
+    baseURL : url,
+    timeout : 1000,
+    
+});
 
 let cardService = {
 
     async create(cardInfo) {
         
-        let card = await axios.post(url + 'card/', cardInfo);
+        let card = await axios.post('card/', cardInfo).data.body;
         
         if(!card)
             throw new Error('cannot create card');
@@ -15,7 +20,7 @@ let cardService = {
 
     async getAll() {
 
-        let cards = await axios.get(url + 'card/');
+        let cards = await axios.get('card/').data.body;
         
         return cards;
 
@@ -23,7 +28,7 @@ let cardService = {
 
     async getById(cardId) {
 
-        let card = await axios.get(url + 'card/' + cardId);
+        let card = await axios.get('card/' + cardId).data.body;
         
         if(!card)
             throw new Error('no such card');
@@ -34,7 +39,7 @@ let cardService = {
 
     async deleteById(cardId) {
 
-        let card = await axios.delete(url + 'card/' + cardId);
+        let card = await axios.delete('card/' + cardId).data.body;
         
         if(!card)
             throw new Error('no such card');
@@ -45,7 +50,7 @@ let cardService = {
 
     async updateById(cardId, cardInfo) {
 
-        let card = await axios.put(url + 'card/' + cardId, cardInfo);
+        let card = await axios.put('card/' + cardId, cardInfo).data.body;
         
         if(!card)
             throw new Error('no such card');

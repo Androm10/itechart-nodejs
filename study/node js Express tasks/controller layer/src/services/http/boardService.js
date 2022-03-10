@@ -1,11 +1,15 @@
-let axios = require('axios').default;
-let url = require('../../config.json')['business-layer-url'];
+let url = require('../../config.js').businessLayerUrl;
+
+let axios = require('axios').create({
+    baseURL : url,
+    timeout : 1000,
+});
 
 let boardService = {
 
     async create(boardInfo) {
         
-        let board = await axios.post(url + 'board/', boardInfo);
+        let board = await axios.post('board/', boardInfo).data.body;
         
         if(!board)
             throw new Error('cannot create board');
@@ -15,7 +19,7 @@ let boardService = {
 
     async getAll() {
 
-        let boards = await axios.get(url + 'board/');
+        let boards = await axios.get('board/').data.body;
         
         return boards;
 
@@ -23,7 +27,7 @@ let boardService = {
 
     async getById(boardId) {
 
-        let board = await axios.get(url + 'board/' + boardId);
+        let board = await axios.get('board/' + boardId).data.body;
         
         if(!board)
             throw new Error('no such board');
@@ -34,7 +38,7 @@ let boardService = {
 
     async deleteById(boardId) {
 
-        let board = await axios.delete(url + 'board/' + boardId);
+        let board = await axios.delete('board/' + boardId).data.body;
         
         if(!board)
             throw new Error('no such board');
@@ -45,7 +49,7 @@ let boardService = {
 
     async updateById(boardId, boardInfo) {
 
-        let board = await axios.put(url + 'board/' + boardId, boardInfo);
+        let board = await axios.put('board/' + boardId, boardInfo).data.body;
         
         if(!board)
             throw new Error('no such board');

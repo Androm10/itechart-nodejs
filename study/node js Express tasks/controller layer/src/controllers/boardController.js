@@ -1,4 +1,4 @@
-const boardService = require('../services/http/boardService');
+const boardService = require('../services/boardService');
 
 const boardController = {
     
@@ -8,8 +8,7 @@ const boardController = {
             name : req.body.name,
             color : req.body.color,
             description : req.body.description,
-            createAt : req.body.createAt,
-
+            createAt : Date.now(),
         }
 
         let board = await boardService.create(data);

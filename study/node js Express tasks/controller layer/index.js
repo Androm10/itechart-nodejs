@@ -17,7 +17,7 @@ startServer();
 function startServer() {
 
     try {
-        app.listen(3306, () => {
+        app.listen(3000, () => {
             console.log('start listening');
         });
     }

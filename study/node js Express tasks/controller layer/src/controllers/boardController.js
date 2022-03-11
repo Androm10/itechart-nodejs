@@ -27,7 +27,7 @@ const boardController = {
 
     async getById(req, res) {
 
-        let board = await boardService.getById(req.body.id);
+        let board = await boardService.getById(req.params.id);
 
         res.status(200).json({type: "success", body : board});
 
@@ -35,7 +35,7 @@ const boardController = {
 
     async deleteById(req, res) {
 
-        let board = await boardService.deleteById(req.body.id);
+        let board = await boardService.deleteById(req.params.id);
 
         res.status(200).json({type: "success", body : board});
 
@@ -51,7 +51,7 @@ const boardController = {
 
         }
 
-        let board = await boardService.getById(req.body.id, data);
+        let board = await boardService.getById(req.params.id, data);
 
         res.status(200).json({type: "success", body : board});
 

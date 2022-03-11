@@ -30,7 +30,7 @@ const cardController = {
 
     async getById(req, res) {
 
-        let card = await cardService.getById(req.body.id);
+        let card = await cardService.getById(req.params.id);
 
         res.status(200).json({type: "success", body : card});
 
@@ -38,7 +38,7 @@ const cardController = {
 
     async deleteById(req, res) {
 
-        let card = await cardService.deleteById(req.body.id);
+        let card = await cardService.deleteById(req.params.id);
 
         res.status(200).json({type: "success", body : card});
 
@@ -56,7 +56,7 @@ const cardController = {
             labels : req.body.labels 
         }
 
-        let card = await cardService.getById(req.body.id, data);
+        let card = await cardService.getById(req.params.id, data);
 
         res.status(200).json({type: "success", body : card});
 

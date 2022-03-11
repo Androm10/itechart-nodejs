@@ -1,10 +1,12 @@
-const userService = require('../services/userService');
+const fileworker = require('../filework');
+const userPath = require('../config').databasePath + '/user.json';
+
 
 const userController = {
     
     async create(req, res) {
          
-        let user = await userService.create(req.body);
+        let user = await fileworker.create(userPath, req.body);
 
         res.status(200).json({type: "success", body : user});
 
@@ -12,7 +14,7 @@ const userController = {
 
     async getAll(req, res) {
         
-        let users = await userService.getAll(req.query);
+        let users = await fileworker.getAll(userPath);
 
         res.status(200).json({type: "success", body : users});
 
@@ -20,7 +22,7 @@ const userController = {
 
     async getById(req, res) {
 
-        let user = await userService.getById(req.params.id);
+        let user = await fileworker.getById(userPath, req.params.id);
 
         res.status(200).json({type: "success", body : user});
 

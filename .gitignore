@@ -2,3 +2,5 @@
 node_modules
 cookbook/.env
 *.log
+*.eslintrc.json
+.eslintrc.json

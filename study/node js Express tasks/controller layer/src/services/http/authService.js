@@ -3,7 +3,7 @@ let { businessLayerUrl : url, secret } = require('../../config.js');
 
 let axios = require('axios').create({
     baseURL : url,
-    timeout : 1000
+    timeout : 6000
 });
 
 
@@ -21,7 +21,7 @@ const authService = {
     },
 
     async logIn(userData) {
-
+        console.log('buuubuuler');
         let user = await axios.get('/user?login=' + userData.login).data.body;
         
         if(!user)

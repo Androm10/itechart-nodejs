@@ -2,7 +2,7 @@ let url = require('../../config').businessLayerUrl;
 
 let axios = require('axios').create({
     baseURL : url,
-    timeout : 1000,
+    timeout : 6000,
     
 });
 

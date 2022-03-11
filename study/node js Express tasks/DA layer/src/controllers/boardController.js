@@ -1,11 +1,12 @@
-const boardService = require('../services/boardService');
+const fileworker = require('../filework');
+const boardPath = require('../config').databasePath + '/board.json';
 
 const boardController = {
     
     async create(req, res) {
         
     
-        let board = await boardService.create(req.body);
+        let board = await fileworker.create(boardPath, req.body);
 
         res.status(200).json({type: "success", body : board});
 
@@ -13,7 +14,7 @@ const boardController = {
 
     async getAll(req, res) {
         
-        let boards = await boardService.getAll();
+        let boards = await fileworker.getAll(boardPath);
 
         res.status(200).json({type: "success", body : boards});
 
@@ -21,7 +22,7 @@ const boardController = {
 
     async getById(req, res) {
 
-        let board = await boardService.getById(req.params.id);
+        let board = await fileworker.getById(boardPath, req.params.id);
 
         res.status(200).json({type: "success", body : board});
 
@@ -29,7 +30,7 @@ const boardController = {
 
     async deleteById(req, res) {
 
-        let board = await boardService.deleteById(req.params.id);
+        let board = await fileworker.deleteById(boardPath, req.params.id);
 
         res.status(200).json({type: "success", body : board});
 
@@ -37,7 +38,7 @@ const boardController = {
 
     async updateById(req, res) {
 
-        let board = await boardService.getById(req.params.id, req.body);
+        let board = await fileworker.updateById(boardPath, req.params.id, req.body);
 
         res.status(200).json({type: "success", body : board});
 

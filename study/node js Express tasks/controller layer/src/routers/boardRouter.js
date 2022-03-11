@@ -7,13 +7,15 @@ const async = require('../utils/async');
 
 const validate = require('../middlewares/validate');
 const boardSchema = require('../schemas/boardSchema');
-
+const isAdmin = require('../middlewares/isAdmin');
 
 router.get('/', async(boardController.getAll));
 
-router.post('/', validate(boardSchema), async(boardController.create));
-
 router.get('/:id', async(boardController.getById));
+
+router.use(isAdmin);
+
+router.post('/', validate(boardSchema), async(boardController.create));
 
 router.delete('/:id', async(boardController.deleteById));
 

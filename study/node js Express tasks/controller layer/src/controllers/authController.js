@@ -7,7 +7,7 @@ const authController = {
         let user = {
             login : req.body.login,
             password : req.body.password,
-            role : 'user'
+            role : 'User'
         }
 
         let result = await authService.signUp(user);

@@ -11,15 +11,14 @@ if (result.error) {
 console.log(result.parsed);
 
 //layer interaction service
-businessLayerTypes = {
+DALayerTypes = {
     http : '/services/http',
     //rabbit : '/services/rabbit'
 }
 
 module.exports = {
 
-    businessLayerUrl : process.env.BUSINESS_URL || "http://localhost:3002/",
-    secret :  process.env.SECRET || "secret",
+    DALayerUrl : process.env.DA_URL || "http://localhost:3002/",
     
-    usedService : __dirname + businessLayerTypes[process.env.BUSINESS_TYPE || 'http']
+    usedService : __dirname + DALayerTypes[process.env.DA_TYPE || 'http']
 }

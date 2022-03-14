@@ -56,7 +56,7 @@ const cardController = {
             labels : req.body.labels 
         }
 
-        let card = await cardService.getById(req.params.id, data);
+        let card = await cardService.updateById(req.params.id, data);
 
         res.status(200).json({type: "success", body : card});
 

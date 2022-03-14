@@ -1,8 +1,13 @@
+const ResponseError = require('../../utils/responseError');
+
 let url = require('../../config').businessLayerUrl;
 
 let axios = require('axios').create({
     baseURL : url,
     timeout : 6000,
+    validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status >= 400 && status < 500; 
+      },
     
 });
 
@@ -10,17 +15,17 @@ let cardService = {
 
     async create(cardInfo) {
         
-        let card = await axios.post('card/', cardInfo).data.body;
-        
-        if(!card)
-            throw new Error('cannot create card');
+        let res = (await axios.post('card/', cardInfo));
 
-        return card;
+        if(res.data.type == 'error')
+            throw new ResponseError('cannot create card', res.status);
+
+        return res.data.body;
     },
 
     async getAll() {
 
-        let cards = await axios.get('card/').data.body;
+        let cards = (await axios.get('card/')).data.body;
         
         return cards;
 
@@ -28,34 +33,34 @@ let cardService = {
 
     async getById(cardId) {
 
-        let card = await axios.get('card/' + cardId).data.body;
+        let res = (await axios.get('card/' + cardId));
         
-        if(!card)
-            throw new Error('no such card');
+        if(res.data.type == 'error')
+            throw new ResponseError('no such card', 404);
 
-        return card;
+        return res.data.body;
 
     },
 
     async deleteById(cardId) {
 
-        let card = await axios.delete('card/' + cardId).data.body;
+        let res = (await axios.delete('card/' + cardId));
         
-        if(!card)
-            throw new Error('no such card');
+        if(res.data.type == 'error')
+            throw new ResponseError('no such card', 404);
 
-        return card;
+        return res.data.body;
 
     },
 
     async updateById(cardId, cardInfo) {
 
-        let card = await axios.put('card/' + cardId, cardInfo).data.body;
+        let res = (await axios.put('card/' + cardId, cardInfo));
         
-        if(!card)
-            throw new Error('no such card');
+        if(res.data.type == 'error')
+            throw new ResponseError('no such card', 404);
 
-        return card;
+        return res.data.body;
 
     }
 

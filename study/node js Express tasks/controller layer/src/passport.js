@@ -1,7 +1,7 @@
 const passport = require('passport');
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const userService = require('./services/http/userService');
+const userService = require('./services/userService');
 const config = require('./config');
 
 

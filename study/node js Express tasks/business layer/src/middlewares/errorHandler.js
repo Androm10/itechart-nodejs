@@ -6,12 +6,13 @@ module.exports = (error, req, res, next) => {
         next();
     }
 
-    logger.log('error', { ...error, date : Date.now() });
+    logger.log('error', { date : Date.now(), message: error.message, stack : error.stack });
 
-    res.status(error.status || 500)
+    let status = error.status || 500;
+
+    res.status(status)
     .json({ 
         type : 'error', 
-        body : error.status >= 500 ? 'Unexpected error' : error.message
+        body : status >= 500 ? 'Unexpected error' : error.message
     });
-
 }

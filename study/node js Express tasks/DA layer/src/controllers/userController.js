@@ -23,7 +23,6 @@ const userController = {
     async getById(req, res) {
 
         let user = await fileworker.getById(userPath, req.params.id);
-
         res.status(200).json({type: "success", body : user});
 
     },

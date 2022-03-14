@@ -1,3 +1,5 @@
+const ResponseError = require('../../utils/ResponseError.js');
+
 let url = require('../../config.js').DALayerUrl;
 
 let axios = require('axios').create({
@@ -9,17 +11,17 @@ let boardService = {
 
     async create(boardInfo) {
         
-        let board = await axios.post('board/', boardInfo).data.body;
+        let board = (await axios.post('board/', boardInfo)).data.body;
         
         if(!board)
-            throw new Error('cannot create board');
+            throw new ResponseError('cannot create board', 400);
 
         return board;
     },
 
     async getAll() {
 
-        let boards = await axios.get('board/').data.body;
+        let boards = (await axios.get('board/')).data.body;
         
         return boards;
 
@@ -27,10 +29,10 @@ let boardService = {
 
     async getById(boardId) {
 
-        let board = await axios.get('board/' + boardId).data.body;
+        let board = (await axios.get('board/' + boardId)).data.body;
         
         if(!board)
-            throw new Error('no such board');
+            throw new ResponseError('no such board', 404);
 
         return board;
 
@@ -38,10 +40,10 @@ let boardService = {
 
     async deleteById(boardId) {
 
-        let board = await axios.delete('board/' + boardId).data.body;
+        let board = (await axios.delete('board/' + boardId)).data.body;
         
         if(!board)
-            throw new Error('no such board');
+            throw new ResponseError('no such board', 404);
 
         return board;
 
@@ -49,10 +51,10 @@ let boardService = {
 
     async updateById(boardId, boardInfo) {
 
-        let board = await axios.put('board/' + boardId, boardInfo).data.body;
+        let board = (await axios.put('board/' + boardId, boardInfo)).data.body;
         
         if(!board)
-            throw new Error('no such board');
+            throw new ResponseError('no such board', 404);
 
         return board;
 

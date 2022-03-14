@@ -1,3 +1,5 @@
+const ResponseError = require('../../utils/ResponseError');
+
 let url = require('../../config').DALayerUrl;
 
 let axios = require('axios').create({
@@ -10,17 +12,17 @@ let cardService = {
 
     async create(cardInfo) {
         
-        let card = await axios.post('card/', cardInfo).data.body;
+        let card = (await axios.post('card/', cardInfo)).data.body;
         
         if(!card)
-            throw new Error('cannot create card');
+            throw new ResponseError('cannot create card', 400);
 
         return card;
     },
 
     async getAll() {
 
-        let cards = await axios.get('card/').data.body;
+        let cards = (await axios.get('card/')).data.body;
         
         return cards;
 
@@ -28,10 +30,10 @@ let cardService = {
 
     async getById(cardId) {
 
-        let card = await axios.get('card/' + cardId).data.body;
+        let card = (await axios.get('card/' + cardId)).data.body;
         
         if(!card)
-            throw new Error('no such card');
+            throw new ResponseError('no such card', 404);
 
         return card;
 
@@ -39,10 +41,10 @@ let cardService = {
 
     async deleteById(cardId) {
 
-        let card = await axios.delete('card/' + cardId).data.body;
+        let card = (await axios.delete('card/' + cardId)).data.body;
         
         if(!card)
-            throw new Error('no such card');
+            throw new ResponseError('no such card', 404);
 
         return card;
 
@@ -50,10 +52,10 @@ let cardService = {
 
     async updateById(cardId, cardInfo) {
 
-        let card = await axios.put('card/' + cardId, cardInfo).data.body;
+        let card = (await axios.put('card/' + cardId, cardInfo)).data.body;
         
         if(!card)
-            throw new Error('no such card');
+            throw new ResponseError('no such card', 404);
 
         return card;
 

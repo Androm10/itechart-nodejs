@@ -1,25 +1,31 @@
-let url = require('../../config.js').businessLayerUrl;
+const ResponseError = require('../../utils/responseError');
+
+let url = require('../../config').businessLayerUrl;
 
 let axios = require('axios').create({
     baseURL : url,
     timeout : 6000,
+    validateStatus: function (status) {
+        return (status >= 200 && status < 300) || status >= 400 && status < 500; 
+      },
+    
 });
 
 let boardService = {
 
     async create(boardInfo) {
         
-        let board = await axios.post('board/', boardInfo).data.body;
-        
-        if(!board)
-            throw new Error('cannot create board');
+        let res = (await axios.post('board/', boardInfo));
 
-        return board;
+        if(res.data.type == 'error')
+            throw new ResponseError('cannot create board', res.status);
+
+        return res.data.body;
     },
 
     async getAll() {
 
-        let boards = await axios.get('board/').data.body;
+        let boards = (await axios.get('board/')).data.body;
         
         return boards;
 
@@ -27,34 +33,34 @@ let boardService = {
 
     async getById(boardId) {
 
-        let board = await axios.get('board/' + boardId).data.body;
+        let res = (await axios.get('board/' + boardId));
         
-        if(!board)
-            throw new Error('no such board');
+        if(res.data.type == 'error')
+            throw new ResponseError('no such board', 404);
 
-        return board;
+        return res.data.body;
 
     },
 
     async deleteById(boardId) {
 
-        let board = await axios.delete('board/' + boardId).data.body;
+        let res = (await axios.delete('board/' + boardId));
         
-        if(!board)
-            throw new Error('no such board');
+        if(res.data.type == 'error')
+            throw new ResponseError('no such board', 404);
 
-        return board;
+        return res.data.body;
 
     },
 
     async updateById(boardId, boardInfo) {
 
-        let board = await axios.put('board/' + boardId, boardInfo).data.body;
+        let res = (await axios.put('board/' + boardId, boardInfo));
         
-        if(!board)
-            throw new Error('no such board');
+        if(res.data.type == 'error')
+            throw new ResponseError('no such board', 404);
 
-        return board;
+        return res.data.body;
 
     }
 

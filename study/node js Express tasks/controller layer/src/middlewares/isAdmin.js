@@ -1,4 +1,5 @@
 const authService = require('../services/authService');
+const ResponseError = require('../utils/responseError');
 
 module.exports = async (req, res, next) => {
 
@@ -7,6 +8,6 @@ module.exports = async (req, res, next) => {
     if(isAdmin)
         next();
     else
-        next(new Error('no access').status = 403);
+        next(new ResponseError('No access', 403));
         
 }

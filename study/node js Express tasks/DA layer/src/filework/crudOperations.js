@@ -8,7 +8,7 @@ module.exports = {
         let json = JSON.parse(stringified);
 
         if(id in json)
-            return json[id];
+            return {id, ...json[id]};
         
 
         return null;
@@ -23,7 +23,7 @@ module.exports = {
 
         let arr = [];
         for(let id of ids) {
-            arr.push(json[id]);
+            arr.push({id, ...json[id]});
         }
 
         return arr;
@@ -38,6 +38,7 @@ module.exports = {
         if(!(id in json))
             return null;
         
+        
 
         let deleted = JSON.stringify(json[id]);
 
@@ -45,7 +46,8 @@ module.exports = {
 
         await fs.writeFile(JsonFile, JSON.stringify(json));
 
-        return deleted;
+        console.log('HEREREE', deleted);
+        return JSON.parse(deleted);
 
     },
 
@@ -58,12 +60,13 @@ module.exports = {
         let maxId = 0;
         if(ids.length != 0) {
             maxId = ids.reduce((max, item) => {
-                if(+max < +item)
-                    max = item;
-            })
+                if(Number(max) < Number(item) )
+                    return item;
+                return max;
+            }, 0)
         }
 
-        json[maxId + 1] = instance;
+        json[Number(maxId) + 1] = instance;
 
         await fs.writeFile(JsonFile, JSON.stringify(json));
 
@@ -76,21 +79,19 @@ module.exports = {
         let stringified = await fs.readFile(JsonFile);
         let json = JSON.parse(stringified);
 
-        if(id in json)
+        if(!(id in json)){
             return null;
+        }
 
-        for(let property of instance) {
-
-            if(json[id][property] != instance[property])
-                json[id][property] = instance[property];
-        
+        for(let property in instance) {
+            json[id][property] = instance[property];
         }
 
         let updated = JSON.stringify(json[id]);
 
         await fs.writeFile(JsonFile, JSON.stringify(json));
 
-        return updated;
+        return JSON.parse(updated);
 
     }
 

@@ -14,10 +14,7 @@ if(process.env.NODE_ENV != 'production') {
     logger
         .clear()
         .add(
-            new winston.transports.Console({
-                format: winston.format.simple(),
-                level: 'debug'
-            })
+            new winston.transports.Console()
         )
 }
 

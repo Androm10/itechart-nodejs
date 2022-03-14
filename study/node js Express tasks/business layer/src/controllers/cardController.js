@@ -4,7 +4,6 @@ const cardController = {
     
     async create(req, res) {
         
-     
         let card = await cardService.create(req.body);
 
         res.status(200).json({type: "success", body : card});
@@ -20,7 +19,6 @@ const cardController = {
     },
 
     async getById(req, res) {
-        console.log('here we are');
         let card = await cardService.getById(req.params.id);
 
         res.status(200).json({type: "success", body : card});
@@ -38,7 +36,7 @@ const cardController = {
     async updateById(req, res) {
 
 
-        let card = await cardService.getById(req.params.id, req.body);
+        let card = await cardService.updateById(req.params.id, req.body);
 
         res.status(200).json({type: "success", body : card});
 

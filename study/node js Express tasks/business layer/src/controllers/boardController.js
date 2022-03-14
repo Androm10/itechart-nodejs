@@ -37,7 +37,7 @@ const boardController = {
 
     async updateById(req, res) {
 
-        let board = await boardService.getById(req.params.id, req.body);
+        let board = await boardService.updateById(req.params.id, req.body);
 
         res.status(200).json({type: "success", body : board});
 

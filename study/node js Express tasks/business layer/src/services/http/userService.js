@@ -1,43 +1,45 @@
+const ResponseError = require('../../utils/ResponseError');
+
 let url = require('../../config').DALayerUrl;
 
 let axios = require('axios').create({
     baseURL : url,
-    timeout : 6000,
-    
+    timeout : 6000,    
 });
 
 let userService = {
 
     async create(userInfo) {
         
-        let user = await axios.post('user/', userInfo).data.body;
+        let user = (await axios.post('user/', userInfo)).data.body;
         
         if(!user)
-            throw new Error('cannot create user');
+            throw new ResponseError('cannot create user', 400);
 
         return user;
     },
 
     async getAll(query) {
 
-        let users = await axios.get('user/').data.body;
+        let res = await axios.get('user/');
+
+        let users = res.data.body;
 
         if('login' in query) {
             users = users.filter((user) => {
                 return user.login == query['login'];
             })
         }
-        
+                
         return users;
 
     },
 
     async getById(userId) {
-
-        let user = await axios.get('user/' + userId).data.body;
+        let user = (await axios.get('user/' + userId)).data.body;
         
         if(!user)
-            throw new Error('no such user');
+            throw new ResponseError('no such user', 404);
 
         return user;
 

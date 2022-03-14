@@ -15,8 +15,7 @@ if(process.env.NODE_ENV != 'production') {
         .clear()
         .add(
             new winston.transports.Console({
-                format: winston.format.simple(),
-                level: 'debug'
+                level: 'error'
             })
         )
 }

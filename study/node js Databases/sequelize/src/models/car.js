@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
         status : {
             type : DataTypes.STRING(20),
             validate : {
-                isIn : ['Free', 'Reserved', 'In use', 'Unavailable', 'In Service']
+                isIn : [['Free', 'Reserved', 'In Use', 'Unavailable', 'In Service']]
             }
         },
         fuelLevel : {
@@ -50,10 +50,10 @@ module.exports = (sequelize) => {
             type : DataTypes.BIGINT.UNSIGNED
         },
         geoLatitude : {
-            type : DataTypes.DECIMAL
+            type : DataTypes.FLOAT(8)
         },
-        geoLongtitude : {
-            type : DataTypes.DECIMAL
+        geoLongitude : {
+            type : DataTypes.FLOAT(8)
         }
 
 

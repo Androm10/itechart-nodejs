@@ -21,9 +21,12 @@ module.exports = {
             attributes : ['VIN', 'geoLatitude', 'geoLongitude'],
             include : {
                 model : Run,
+                attributes : [],
+                required: true,
                 include : {
                     model: Driver,
-                    attributes : ['licenceNumber', 'firstName', 'lastName'],
+                    required: true,
+                    attributes : ['licenseNumber', 'firstName', 'lastName'],
                     where : {
                         creditId : null
                     }
@@ -58,55 +61,69 @@ module.exports = {
 
     async setCarInService(req, res) {
     
-        let id = req.params.id;
-
-        let car = await Car.update({
+        let cars = await Car.update({
                 status : 'In Service'
             },
             {
             where : {
-                productionDate : {
-                    [Op.lt] : '01/01/2017'
+                [Op.or] :{
+                    productionDate : {
+                        [Op.lt] : '01/01/2017'
+                    },
+                    mileage : {
+                        [Op.gt] : 100_000 
+                    },
                 },
-                id : id,
-                mileage : {
-                    [Op.gt] : 100_000 
-                }
-
             }
         })
-
-
-        res.status(200).json({ type : 'success', body : car[0]});
+       
+        res.status(200).json({ type : 'success', body : cars});
+        
+         // TO TEST SELECTION
+        // let cars = await Car.findAll({
+        //         where : {
+        //             [Op.or] :{
+        //                 productionDate : {
+        //                     [Op.lt] : '2017-01-01 00:00:00'
+        //                 },
+        //                 mileage : {
+        //                     [Op.gt] : 100_000 
+        //                 },
+        //             },
+        //         }
+        //     });
+        // res.status(200).json({ type : 'success', body : cars});
     },
 
     async setCarOnParking(req, res) {
 
-        let id = req.params.id;
-
-        let car = await Car.update({
-            geoLatitude : 53.8882836,
-            geoLongitude : 27.5442615
-        },
+        let cars = await Car.findAll(
         {
             where : {
                 status : {
                     [Op.notIn] : ['In Use', 'Reserved']
-                },
-                id : id
+                }
             },
             include : {
                 model : Booking,
-                attributes : [],
-                where : {
-                    [sequelize.fn('COUNT', sequelize.col('id'))] : {
-                        [Op.gt] : 2
-                    }
+                attributes : [[sequelize.fn('COUNT', sequelize.col('carId')), 'count']],
+            },
+            group : 'id',
+            having : {
+                'Bookings.count' : {
+                    [Op.gt] : 2
                 }
             }
         });
 
-        res.status(200).json({ type : 'success', body : car[0]});
+        for(let car of cars) {
+            car.update({
+                geoLatitude : 53.8882836,
+                geoLongitude : 27.5442615
+            })
+        }
+
+        res.status(200).json({ type : 'success', body : cars});
     },
 
 

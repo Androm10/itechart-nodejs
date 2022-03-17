@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         },
         creditId : {
             type : DataTypes.BIGINT.UNSIGNED,
-            allowNull : false 
+            allowNull : true 
         }
     })
 

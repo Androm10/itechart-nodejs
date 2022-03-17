@@ -12,9 +12,11 @@ let logger = winston.createLogger({
 
 
 if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
-      format: winston.format.simple(),
-    }));
+    logger
+        .clear()
+        .add(
+            new winston.transports.Console()
+        )
 }
 
 module.exports = logger;

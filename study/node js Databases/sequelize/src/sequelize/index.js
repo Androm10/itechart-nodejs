@@ -1,3 +1,4 @@
+const initialize = require("./initialize");
 const sequelize = require("./sequelize");
 
 const Booking = require("../models/booking")(sequelize);
@@ -7,8 +8,8 @@ const Driver = require("../models/driver")(sequelize);
 const Run = require("../models/run")(sequelize);
 
 
-Booking.belongsTo(Car, {foreignKey : 'carId'});
-Car.hasMany(Booking, {foreignKey : 'carId'});
+Booking.belongsTo(Car, {foreignKey : 'carId', onDelete : 'CASCADE'});
+Car.hasMany(Booking, {foreignKey : 'carId' });
 
 Booking.belongsTo(Run, {foreignKey : 'runId'});
 Run.hasMany(Booking, {foreignKey : 'runId'});
@@ -22,7 +23,10 @@ Driver.hasOne(Run, {foreignKey : 'driverId'});
 Driver.belongsTo(Credit, {foreignKey : 'creditId'});
 Credit.hasOne(Driver, {foreignKey : 'creditId'});
 
-sequelize.sync({alter : true});
+sequelize.sync({force : true}).then( async () => {
+    if((await Car.findAll()).length <= 4)
+        initialize(Car,Credit,Driver,Run,Booking)
+});
 
 module.exports = {
     Booking,

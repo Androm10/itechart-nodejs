@@ -3,9 +3,9 @@ const logger = require('../logger');
 const config = require('../config').sequelize;
 
 let options = {
-    dialect,
-    host,
-    port
+    dialect : config.dbDialect,
+    host : config.dbHost,
+    port: config.dbPort
 }
 
 let sequelize = new Sequelize(

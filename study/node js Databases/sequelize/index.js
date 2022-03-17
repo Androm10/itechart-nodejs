@@ -1,16 +1,13 @@
 const logger = require('./src/logger');
-const errorHandler = require('./src/middlewares/errorHandler');
 let router = require('./src/routers');
 
 const express = require('express');
 let app = express();
 
 
-app
-    .use(router)
-    .use(errorHandler)
+app.use(router)
 
-
+start();
 
 function start() {
     try {

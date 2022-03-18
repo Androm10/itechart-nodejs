@@ -4,3 +4,4 @@ cookbook/.env
 *.log
 *.eslintrc.json
 .eslintrc.json
+ts_compile

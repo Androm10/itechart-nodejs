@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 let env = dotenv.config();
 
-if(!env.error) {
+if(env.error) {
     console.log('Cannot read environment values');
 }
 console.log(env.parsed);

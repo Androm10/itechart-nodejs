@@ -1,4 +1,6 @@
 import mongoose from "../mongoose";
+import currentRunScheme from './schemes/currentRun';
+import bookingHistoryScheme from './schemes/bookingHistory';
 
 let model = mongoose.model('car', new mongoose.Schema({
 
@@ -52,8 +54,31 @@ let model = mongoose.model('car', new mongoose.Schema({
         required : false
     },
      
+    currentRun : {
+        type: currentRunScheme,
+        default : undefined,
+        required : false
+    },
 
-}));
+    location : {
+        type : {
+            type : String,
+            enum : ['Point'],
+            required : true
+        },
+        coordinates : {
+            type: [Number],
+            required:  true
+        }
+        
+    },
+    bookingHistory : {
+        type: [bookingHistoryScheme],
+        default : undefined,
+        required : false
+    }
+    
+}, {storeSubdocValidationError: false}));
 
 export default model;
 

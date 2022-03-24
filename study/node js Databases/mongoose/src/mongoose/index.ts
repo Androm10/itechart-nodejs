@@ -1,16 +1,4 @@
-import * as mongoose from 'mongoose';
-const connection = require('../config').mongodb;
+import models from './models';
 
-connect();
 
-async function connect() {
-    try {
-        await mongoose.connect(connection);
-        console.log("server: connection to mongodb success");
-    }
-    catch(error) {
-        console.log("server: cannot connect to mongodb");
-    }
-}
-
-module.exports = mongoose;
+export default models;

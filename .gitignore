@@ -5,3 +5,4 @@ cookbook/.env
 *.eslintrc.json
 .eslintrc.json
 ts_compile
+.vscode

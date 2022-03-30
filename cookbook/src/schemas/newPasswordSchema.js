@@ -1,6 +1,6 @@
 let joi = require('joi');
 
-let authSchema = joi.object().keys({
+let newPasswordSchema = joi.object().keys({
 
     oldPassword : joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
 
@@ -11,4 +11,4 @@ let authSchema = joi.object().keys({
 
 });
 
-module.exports = authSchema;
+module.exports = newPasswordSchema;

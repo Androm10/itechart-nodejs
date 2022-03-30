@@ -37,9 +37,6 @@ module.exports = {
 
         let user = await userRepository.getById(userId);
 
-        if(!user)
-            throw(new Error('No such user'));
-
         if(!crypt.comparePassword(passwords.oldPassword, user.password)) {
             throw(new Error('Password cannot be changed'));
         }

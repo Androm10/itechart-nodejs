@@ -1,6 +1,7 @@
 let express = require('express');
 const app = express();
 const passport = require('./src/passport');
+const config = require('./src/config').server;
 
 const { startAllJobs } = require('./src/jobs/');
 
@@ -37,7 +38,7 @@ startListening();
 
 function startListening() {
     try {
-        app.listen(3000, () => {
+        app.listen(3000, config.host, () => {
             
             console.log("start listening");
             startAllJobs();
@@ -49,3 +50,4 @@ function startListening() {
     
     }
 }
+app.listen()

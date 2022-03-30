@@ -17,9 +17,17 @@ module.exports = {
         port : process.env.DB_PORT          || "3306",
     },
 
-    secret : process.env.SECRET || "secret",
+    server: {
+        host: process.env.HOST || 'localhost',
+    },
 
+    secret : process.env.SECRET || "secret",
+    
     jwtBlacklist : __dirname + '/../jwtBlacklist.txt',
+    
+    mongodb : process.env.MONGO_CONNECTION,
+
+    rabbitmq : process.env.RABBIT_URL || 'amqp://localhost',
 
     sortTypes : [
         'popularity',

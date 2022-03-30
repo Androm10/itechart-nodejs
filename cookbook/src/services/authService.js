@@ -1,9 +1,13 @@
 let secret = require('../config').secret;
 let crypt = require('../utils/crypt');
 let jwt = require('jsonwebtoken');
+let uuid = require('uuid').v4;
 
 const userRepository = require('../repository/userRepository');
 const jwtBlacklist = require('../utils/jwtBlacklist');
+const resetTokenManager = require('../utils/resetTokenManager');
+const amqp = require('../amqp');
+const config = require('../config');
 
 module.exports = {
 
@@ -42,10 +46,7 @@ module.exports = {
             throw(new Error('invalid token'));
         }
         
-        if(!decoded.refresh)
-            throw(new Error('invalid token'));
-
-        if(await jwtBlacklist.has(userToken))
+        if(!decoded.refresh || await jwtBlacklist.has(userToken))
             throw(new Error('invalid token'));
 
         jwtBlacklist.add(userToken);
@@ -66,7 +67,51 @@ module.exports = {
 
         return { accessToken, refreshToken };  
 
-    }
+    },
 
+
+    resetPasswordRequest : async function(login) {
+
+        let user = await userRepository.getByLogin(login);
+
+        if(!user)
+            throw new Error('No user with provided login was found');
+
+        let resetToken = {
+            user : login,
+            token : uuid()
+        }
+
+        await resetTokenManager.addToken(resetToken);
+
+        let mail = {
+            type: 'resetPassword',
+            to: login,
+            context : {
+                name: login,
+                link: `http://${config.server.host}:3000/resetPassword/{${resetToken.token}}`
+            }
+        }
+
+        amqp.sendToMailer(JSON.stringify(mail));
+
+        return true;
+    },
+
+    async resetPassword(uuid, newPassword) {
+
+        let token = await resetTokenManager.getByUUID(id);
+
+        if(!token) 
+            throw new Error('invalid token');
+        
+        
+        let hashedPassword = await crypt.cryptPassword(newPassword);
+        
+        let user = await userRepository.getByLogin(token.user);
+        await user.update({ password :  hashedPassword});
+        
+        return user;
+    }
 
 }

@@ -43,6 +43,24 @@ module.exports = {
 
         res.status(200).json(tokens);
 
+    },
+
+    resetPasswordRequest : async function(req, res, next) {
+
+        let response = await authService.resetPasswordRequest(req.body.email);
+
+        res.status(201).json({ type: 'success', body: response});
+
+    },
+
+    resetPassword : async function(req, res, next) {
+
+        console.log(req.params.uuid);
+
+        let response = await authService.resetPassword(req.params.uuid, req.body.newPassword);
+
+        res.status(201).json({ type: 'success', body: response});
+
     }
 
 }

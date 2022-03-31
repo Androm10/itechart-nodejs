@@ -8,12 +8,12 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         let recipe = await models.recipe.findByPk(recipeId);
 
         if(!recipe)
-            throw(new Error('no such recipe'));
+            throw new ResponseError('no such recipe', 404);
 
         let comment = await models.recipeComment.create({userId, recipeId, ...content});
         return comment;
@@ -25,12 +25,12 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         let cookbook = await models.cookbook.findByPk(cookbookId);
 
         if(!cookbook)
-            throw(new Error('no such cookbook'));
+            throw new ResponseError('no such cookbook', 404);
 
         let comment = await models.cookbookComment.create({userId, cookbookId, ...content});
 
@@ -43,7 +43,7 @@ module.exports = {
         let comment = await models.recipeComment.findByPk(commentId);
 
         if(!comment)
-            throw(new Error('no such comment'));
+            throw new ResponseError('no such comment', 404);
 
         return comment
 
@@ -54,7 +54,7 @@ module.exports = {
         let comment = await models.cookbookComment.findByPk(commentId);
 
         if(!comment)
-            throw(new Error('no such comment'));
+            throw new ResponseError('no such comment', 404);
 
         return comment
 
@@ -65,7 +65,7 @@ module.exports = {
         let comment = await models.recipeComment.findOne({ where : {userId, id}});
 
         if(!comment)
-            throw(new Error('no such comment'));
+            throw new ResponseError('no such comment', 404);
 
         comment.destroy();
 
@@ -78,7 +78,7 @@ module.exports = {
         let comment = await models.cookbookComment.findOne({ where : {userId, id}});
 
         if(!comment)
-            throw(new Error('no such comment'));
+            throw new ResponseError('no such comment', 404);
 
         comment.destroy();
 
@@ -91,12 +91,12 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         let comment = await models.recipeComment.findByPk(commentId);
 
         if(!comment)
-            throw(new Error('no such comment'));
+            throw new ResponseError('no such comment', 404);
 
         await comment.update({...content});
         
@@ -109,12 +109,12 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         let comment = await models.cookbookComment.findByPk(commentId);
 
         if(!comment)
-            throw(new Error('no such comment'));
+            throw new ResponseError('no such comment', 404);
 
         await comment.update({...content});
 

@@ -4,10 +4,7 @@ const viewService = require('./viewService');
 module.exports = {
 
     addRecipe : async function(data) {
-
-        let recipe = await recipeRepository.addRecipe(data);
-        return recipe;
-
+        return await recipeRepository.addRecipe(data);
     },
 
     getById : async function(userId, recipeId) {
@@ -17,28 +14,18 @@ module.exports = {
         viewService.addViewToRecipe(userId, recipeId);
 
         return recipe;
-
     },
 
     getAll : async function(filter) {
-
-        let recipes = await recipeRepository.getAll(filter);
-        return recipes;
-
+        return await recipeRepository.getAll(filter);
     },
 
     deleteById : async function(recipeId) {
-
-        let recipe = await recipeRepository.deleteById(recipeId);
-        return recipe;
-
+        return await recipeRepository.deleteById(recipeId);
     },
 
     updateById : async function(recipeId, data) {
-
-        let recipe = await recipeRepository.updateById(recipeId, data);
-        return recipe;
-
+        return await recipeRepository.updateById(recipeId, data);
     },
 
     cloneRecipe : async function(userId, recipeId) {
@@ -57,7 +44,10 @@ module.exports = {
         let result = await recipeRepository.addRecipe(cloned);
 
         return result;
-    }
+    },
 
+    countAll : async function() {
+        return await recipeRepository.countAll();
+    }
 
 }

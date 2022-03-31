@@ -4,35 +4,23 @@ const viewRepository = require('../repository/viewRepository');
 module.exports = {
 
     async addViewToRecipe(userId, recipeId) {
-
-        let view = await viewRepository.addViewToRecipe(userId, recipeId);
-
-        return view;
-
+        return await viewRepository.addViewToRecipe(userId, recipeId);
     }, 
 
     async addViewToCookbook(userId, cookbookId) {
-
-        let view = await viewRepository.addViewToCookbook(userId, cookbookId);
-
-        return view;
-
+        return await viewRepository.addViewToCookbook(userId, cookbookId);
     }, 
 
     async deleteViewFromRecipe(userId, recipeId) {
-
-        let view = await viewRepository.deleteViewFromRecipe(userId, recipeId);
-
-        return view;
-  
+        return await viewRepository.deleteViewFromRecipe(userId, recipeId);
     },
 
     async deleteViewFromCookbook(userId, cookbookId) {
-
-        let view = await viewRepository.deleteViewFromCookbook(userId, cookbookId);
-
-        return view;
-    
+        return await viewRepository.deleteViewFromCookbook(userId, cookbookId);
     },
+
+    async getViews(modelName, id = 1) {
+        return await viewRepository.getViews(modelName, id);
+    }
 
 }

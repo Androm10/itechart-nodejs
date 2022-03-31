@@ -4,68 +4,36 @@ const commentRepository = require('../repository/commentRepository');
 module.exports = {
 
     async addCommentToRecipe(userId, recipeId, content) {
-
-        let comment = await commentRepository.addCommentToRecipe(userId, recipeId, content);
-
-        return comment;
-
+        return await commentRepository.addCommentToRecipe(userId, recipeId, content);
     }, 
 
     async addCommentToCookbook(userId, cookbookId, content) {
-
-        let comment = await commentRepository.addCommentToCookbook(userId, cookbookId, content);
-
-        return comment;
-
+        return await commentRepository.addCommentToCookbook(userId, cookbookId, content);
     }, 
 
     async getCommentToRecipeById(commentId) {
-
-        let comment = await commentRepository.getCommentToRecipeById(commentId);
-
-        return comment;
-
+        return await commentRepository.getCommentToRecipeById(commentId);
     },
 
     async getCommentToCookbookById(commentId) {
-
-        let comment = await commentRepository.getCommentToCookbookById(commentId);
-
-        return comment;
-
+        return await commentRepository.getCommentToCookbookById(commentId);
     },
 
     async deleteCommentFromRecipe(userId, commentId ) {
-
-        let comment = await commentRepository.deleteCommentFromRecipe(userId, commentId);
-
-        return comment;
-  
+        return await commentRepository.deleteCommentFromRecipe(userId, commentId);
     },
 
     async deleteCommentFromCookbook(userId, commentId) {
-
-        let comment = await commentRepository.deleteCommentFromCookbook(userId, commentId);
-
-        return comment;
-    
+        return await commentRepository.deleteCommentFromCookbook(userId, commentId);
     },
 
 
     async updateCommentToRecipeById(userId, recipeId, content) {
-
-        let comment = await commentRepository.updateCommentToRecipeById(userId, recipeId, content);
-
-        return comment;
-
+        return commentRepository.updateCommentToRecipeById(userId, recipeId, content);
     }, 
 
     async updateCommentToCookbookById(userId, cookbookId, content) {
-
-        let comment = await commentRepository.updateCommentToCookbookById(userId, cookbookId, content);
-
-        return comment;
-
+        return await commentRepository.updateCommentToCookbookById(userId, cookbookId, content);
     }, 
 
 }

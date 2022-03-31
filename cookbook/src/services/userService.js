@@ -1,5 +1,6 @@
 const userRepository = require('../repository/userRepository');
 const crypt = require('../utils/crypt');
+const ResponseError = require('../utils/ResponseError');
 
 module.exports = {
 
@@ -9,28 +10,18 @@ module.exports = {
 
         let user = await userRepository.addUser(data);
         return user;
-
     },
 
     getById : async function(userId) {
-        
-        let user = await userRepository.getById(userId);
-        return user;
-
+        return await userRepository.getById(userId);
     },
 
     getByLogin : async function(login) {
-
-        let user = await userRepository.getByLogin(login);
-        return user;
-    
+        return await userRepository.getByLogin(login);
     },
 
     updateProfile : async function(userId, profile) {
-        
-        let updatedProfile = await userRepository.updateProfile(userId, profile);
-        return updatedProfile;
-
+        return await userRepository.updateProfile(userId, profile);
     },
 
     changePassword : async function(userId, passwords) {
@@ -38,7 +29,7 @@ module.exports = {
         let user = await userRepository.getById(userId);
 
         if(!crypt.comparePassword(passwords.oldPassword, user.password)) {
-            throw(new Error('Password cannot be changed'));
+            throw new ResponseError('Password cannot be changed', 400);
         }
 
         let hashedPassword = await crypt.cryptPassword(passwords.newPassword);
@@ -46,6 +37,24 @@ module.exports = {
         await user.update({ password :  hashedPassword});
 
         return user;
+    },
+
+    updateStatus : async function(userId, status) {
+
+        let user = await userRepository.getById(userId);
+
+        if(!user)
+            throw new ResponseError('no such user', 404);
+
+        return await user.update({status : status});
+    },
+
+    getStatusStats : async function() {
+        return await userRepository.getStatusStats();
+    },
+
+    mostActive : async function() {
+        return await userRepository.mostActive();
     }
 
 }

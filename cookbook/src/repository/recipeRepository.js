@@ -1,17 +1,17 @@
 const { Op } = require('sequelize');
 const sequelize = require('../database');
-
+const ResponseError = require('../utils/ResponseError');
 
 const models = require('../database').models;
 
 module.exports = {
-
+    
     addRecipe : async function(data) {
 
         let recipe = await models.recipe.findOne( {where : { name: data.name}}) ;
 
         if(recipe)
-            throw(new Error('recipe with such name already exists'));
+            throw new ResponseError('recipe with such name already exists', 404);
 
         return await models.recipe.create(data);
 
@@ -22,7 +22,7 @@ module.exports = {
         let recipe = await models.recipe.findByPk(recipeId);
 
         if(!recipe)
-            throw(new Error('no such recipe'));
+            throw new ResponseError('no such recipe', 404);
 
 
         return recipe;
@@ -73,7 +73,7 @@ module.exports = {
         let recipe = await models.recipe.findByPk(recipeId);
 
         if(!recipe)
-            throw(new Error('no such recipe'));
+            throw new ResponseError('no such recipe', 404) ;
 
         recipe.destroy();
         return recipe;
@@ -85,13 +85,22 @@ module.exports = {
         let recipe = await models.recipe.findByPk(recipeId);
 
         if(!recipe)
-            throw(new Error('no such recipe'));
+            throw new ResponseError('no such recipe', 404) ;
 
         await recipe.update(data);
         
         return recipe;
 
     },
+
+    countAll : async function() {
+
+        let count = await models.recipe.findAll({
+            attributes : [[sequelize.fn('COUNT', sequelize.col('id')), 'recipes']]
+        })
+
+        return count;
+    }
 
 
 

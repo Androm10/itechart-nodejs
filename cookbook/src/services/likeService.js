@@ -4,35 +4,19 @@ const likeRepository = require('../repository/likeRepository');
 module.exports = {
 
     async addLikeToRecipe(userId, recipeId) {
-
-        let like = await likeRepository.addLikeToRecipe(userId, recipeId);
-
-        return like;
-
+        return await likeRepository.addLikeToRecipe(userId, recipeId);
     }, 
 
     async addLikeToCookbook(userId, cookbookId) {
-
-        let like = await likeRepository.addLikeToCookbook(userId, cookbookId);
-
-        return like;
-
+        return await likeRepository.addLikeToCookbook(userId, cookbookId);
     }, 
 
     async deleteLikeFromRecipe(userId, recipeId) {
-
-        let like = await likeRepository.deleteLikeFromRecipe(userId, recipeId);
-
-        return like;
-  
+        return await likeRepository.deleteLikeFromRecipe(userId, recipeId);
     },
 
     async deleteLikeFromCookbook(userId, cookbookId) {
-
-        let like = await likeRepository.deleteLikeFromCookbook(userId, cookbookId);
-
-        return like;
-    
+        return await likeRepository.deleteLikeFromCookbook(userId, cookbookId);
     },
 
 }

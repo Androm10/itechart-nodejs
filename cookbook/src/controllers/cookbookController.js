@@ -79,6 +79,21 @@ module.exports = {
         let response = await cookbookService.cloneCookbook(req.user.id, req.params.id);
 
         res.status(200).json({ type: 'success', body: response });
+    },
+
+    countAll : async function(req, res, next) {
+
+        let response = await cookbookService.countAll();
+
+        res.status(200).json({ type: 'success', body: response });
+    },
+
+    mostPopular : async function(req, res, next) {
+
+        let response = await cookbookService.getAll({sort: 'popularity'});
+
+        res.status(200).json({ type: 'success', body: response });
+
     }
 
 }

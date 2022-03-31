@@ -4,10 +4,7 @@ const viewService = require('./viewService');
 module.exports = {
 
     addCookbook : async function(data) {
-
-        let cookbook = await cookbookRepository.addCookbook(data);
-        return cookbook;
-
+        return await cookbookRepository.addCookbook(data);
     },
 
     getById : async function(userId, cookbookId) {
@@ -21,48 +18,30 @@ module.exports = {
     },
 
     getAll : async function(filter) {
-
-        let cookbooks = await cookbookRepository.getAll(filter);
-
-        return cookbooks;
-
+        return await cookbookRepository.getAll(filter);
     },
 
     deleteById : async function(cookbookId) {
-
-        let cookbook = await cookbookRepository.deleteById(cookbookId);
-
-        return cookbook;
-
+        return await cookbookRepository.deleteById(cookbookId);
     },
 
     updateById : async function(cookbookId, data) {
-
-        let cookbook = await cookbookRepository.updateById(cookbookId, data);
-
-        return cookbook;
-
+        return await cookbookRepository.updateById(cookbookId, data);
     },
 
     linkRecipe : async function(cookbookId, recipeId) {
-
-        let link = await cookbookRepository.linkRecipe(cookbookId, recipeId);
-
-        return link;
-
+        return await cookbookRepository.linkRecipe(cookbookId, recipeId);
     },
 
     unlinkRecipe : async function(cookbookId, recipeId) {
-
-        let link = await cookbookRepository.unlinkRecipe(cookbookId, recipeId);
-
-        return link;
-
+        return await cookbookRepository.unlinkRecipe(cookbookId, recipeId);
     },
 
     cloneCookbook : async function(userId, cookbookId) {
 
         let cookbook = await cookbookRepository.getById(cookbookId);
+
+        let assignedRecipes = await cookbook.getRecipes();
 
         let cloned = {
             name : cookbook.name,
@@ -70,9 +49,25 @@ module.exports = {
             creatorId : userId
         }
 
-        let result = await cookbookRepository.addCookbook(cloned);
+        let newCookbook = await cookbookRepository.addCookbook(cloned);
 
-        return result;
+        newCookbook.addRecipes(assignedRecipes.map((recipe) => {
+            return {
+                name : recipe.name,
+                avatar : recipe.avatar,
+                description : recipe.description,
+                directions : recipe.directions,
+                ingridients : recipe.ingridients,
+                cookingTime : recipe.cookingTime,
+                creatorId : userId
+            }
+        }));
+
+        return newCookbook;
+    },
+
+    countAll : async function() {
+        return await cookbookRepository.countAll();
     }
 
 }

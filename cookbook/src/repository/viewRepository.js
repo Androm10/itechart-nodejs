@@ -1,4 +1,6 @@
-const models = require('../database').models;
+const sequelize = require('../database');
+
+const models = sequelize.models;
 
 
 module.exports = {
@@ -8,12 +10,12 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         let recipe = await models.recipe.findByPk(recipeId);
 
         if(!recipe)
-            throw(new Error('no such recipe'));
+            throw new ResponseError('no such recipe', 404);
 
         let view = await models.recipeView.create({ userId: user.id, recipeId : recipe.id});
 
@@ -26,12 +28,12 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         let cookbook = await models.cookbook.findByPk(cookbookId);
 
         if(!cookbook)
-            throw(new Error('no such cookbook'));
+            throw new ResponseError('no such cookbook', 404);
 
         let view = await models.cookbookView.create({ userId: user.id, cookbookId : cookbook.id});
 
@@ -44,7 +46,7 @@ module.exports = {
         let view = await models.recipeView.findOne({ where : {recipeId, userId}});
 
         if(!view)
-            throw(new Error('no such view'));
+            throw new ResponseError('no such view', 404);
 
         view.destroy();
 
@@ -57,12 +59,24 @@ module.exports = {
         let view = await models.cookbookView.findOne({ where : {cookbookId, userId}});
 
         if(!view)
-            throw(new Error('no such view'));
+            throw new ResponseError('no such view', 404);
 
         view.destroy();
 
         return view;
     
     },
+
+    async getViews(modelName, id) {
+
+        let views = await models[modelName + 'View'].findAll({
+            attributes: ['id', [sequelize.fn('COUNT', sequelize.col('id')), 'views'] ],
+            where : {
+                id : id
+            }
+        });
+
+        return views;
+    }
 
 }

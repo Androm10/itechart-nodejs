@@ -1,5 +1,6 @@
-const models = require('../database').models;
-const crypt = require('../utils/crypt');
+const sequelize = require('../database');
+const ResponseError = require('../utils/ResponseError');
+const models = sequelize.models;
 
 module.exports = {
     
@@ -8,7 +9,7 @@ module.exports = {
         let existentUser = await models.user.findOne( {where : { login: data.login}} );
 
         if(existentUser)
-            throw(new Error('such login already exist'));
+            throw new ResponseError('such login already exist', 400);
 
         let user = await models.user.create( {login: data.login, password: data.password, status: 'active'});
         
@@ -28,7 +29,7 @@ module.exports = {
         let user = await models.user.findByPk(userId);
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         return user;
 
@@ -39,7 +40,7 @@ module.exports = {
         let user = await models.user.findOne({where : {login : login}});
 
         if(!user)
-            throw(new Error('no such user'));
+            throw new ResponseError('no such user', 404);
 
         return user;
 
@@ -53,6 +54,32 @@ module.exports = {
 
         return userInfo;
 
+    },
+
+    getStatusStats : async function() {
+
+        return await models.user.findAll({
+            attributes : ['status', [sequelize.fn('COUNT', '*'), 'users']],
+            group: 'status'
+        });
+
+    },
+
+    mostActive : async function() {
+        
+        return await sequelize.query(
+            'SELECT u.id, COUNT(cr.id) + COUNT(cc.id) as "comments", '+ 
+            'COUNT(lr.id) + COUNT(lc.id) as "likes" FROM users u ' +
+            'LEFT JOIN c_comments cc ON u.id = cc.user_id ' +
+            'LEFT JOIN r_comments cr ON u.id = cr.user_id ' +
+            'LEFT JOIN c_likes lc ON u.id = lc.user_id ' +
+            'LEFT JOIN r_likes lr ON u.id = lr.user_id ' +
+            'GROUP BY u.id ' +
+            'ORDER BY comments + likes DESC',
+            {
+                type : "SELECT"
+            });
+            
     }
 
 }

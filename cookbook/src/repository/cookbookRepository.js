@@ -16,7 +16,7 @@ module.exports = {
         let cookbook = await models.cookbook.findByPk(cookbookId);
         
         if(!cookbook)
-            throw(new Error('no such cookbook'));
+            throw new ResponseError('no such cookbook', 404);
 
         return cookbook;
 
@@ -54,11 +54,13 @@ module.exports = {
             options.where[Op.and] = [];
         
             filter.type.split(',').forEach( (item) => {
+
                 options.where[Op.and].push({ 
                     description : {
                         [Op.like] : `%${item}%`
                     }
-                })    
+                })
+
             });
 
         }
@@ -74,7 +76,7 @@ module.exports = {
         let cookbook = await models.cookbook.findByPk(cookbookId);
 
         if(!cookbook)
-            throw(new Error('no such cookbook'));
+            throw new ResponseError('no such cookbook', 404);
 
         cookbook.destroy();
 
@@ -87,7 +89,7 @@ module.exports = {
         let cookbook = await models.cookbook.findByPk(cookbookId);
 
         if(!cookbook)
-            throw(new Error('no such cookbook'));
+            throw new ResponseError('no such cookbook', 404);
 
         await cookbook.update(data);
         
@@ -101,17 +103,17 @@ module.exports = {
         let existedLink = await models.cookbooksRecipes.findOne({where : {cookbookId, recipeId}});
 
         if(existedLink)
-            throw(new Error('this recipe already added to the cookbook'));
+            throw new ResponseError('this recipe already added to the cookbook', 400);
 
         let cookbook = await models.cookbook.findByPk(cookbookId);
 
         if(!cookbook)
-            throw(new Error('no such cookbook'));
+            throw new ResponseError('no such cookbook', 404);
 
         let recipe = await models.recipe.findByPk(recipeId);
 
         if(!recipe)
-            throw(new Error('no such recipe'));
+            throw new ResponseError('no such recipe', 404);
 
         return await models.cookbooksRecipes.create({ cookbookId, recipeId });
 
@@ -122,12 +124,21 @@ module.exports = {
         let link = await models.cookbooksRecipes.findOne({where : {cookbookId, recipeId}});
 
         if(!link)
-            throw(new Error('no such link'));
+            throw new ResponseError('no such link', 404);
 
         link.destroy();
 
         return link;
 
+    },
+
+    countAll : async function() {
+
+        let count = await models.cookbook.findAll({
+            attributes : [[sequelize.fn('COUNT', sequelize.col('id')), 'cookbooks']]
+        })
+
+        return count;
     }
 
 

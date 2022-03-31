@@ -3,20 +3,18 @@ const viewService = require('../services/viewService');
 
 module.exports = {
 
-    async addViewToRecipe(req, res, next) {
+    async getViewsOnCookbook(req, res, next) {
 
-        let response = await viewService.addViewToRecipe(req.user.id, req.params.id);
-
-        res.status(201).json(response);
-
-    }, 
-
-    async addViewToCookbook(req, res, next) {
-
-        let response = await viewService.addViewToCookbook(req.user.id, req.params.id);
+        let response = await viewService.getViewsOnCookbook('cookbook', req.params.id);
 
         res.status(201).json(response);
+    },
 
+    async getViewsOnRecipe(req, res, next) {
+
+        let response = await viewService.getViews('recipe', req.params.id);
+
+        res.status(201).json(response);
     }
 
 }

@@ -8,17 +8,17 @@ const jwtBlacklist = require('../utils/jwtBlacklist');
 const resetTokenManager = require('../utils/resetTokenManager');
 const amqp = require('../amqp');
 const config = require('../config');
+const ResponseError = require('../utils/ResponseError');
 
 module.exports = {
 
     login : async function(instance) {
         let user = await userRepository.getByLogin(instance.login);
-        
         if(!user)
-            throw(buildError(400, 'Login or password is incorrect'));
-
+            throw new ResponseError('Login or password is incorrect', 400);
+        
         if(!crypt.comparePassword(instance.password, user.password))
-            throw(buildError(400, 'Login or password is incorrect'));
+            throw new ResponseError('Login or password is incorrect', 400 );
 
 
         let accessToken = jwt.sign({
@@ -43,11 +43,11 @@ module.exports = {
             decoded = jwt.verify(userToken, secret)
         }
         catch(err) {
-            throw(new Error('invalid token'));
+            throw(new ResponseError('invalid token', 400));
         }
         
         if(!decoded.refresh || await jwtBlacklist.has(userToken))
-            throw(new Error('invalid token'));
+            throw(new ResponseError('invalid token', 400));
 
         jwtBlacklist.add(userToken);
         
@@ -75,7 +75,7 @@ module.exports = {
         let user = await userRepository.getByLogin(login);
 
         if(!user)
-            throw new Error('No user with provided login was found');
+            throw new ResponseError('No user with provided login was found', 404);
 
         let resetToken = {
             user : login,
@@ -103,7 +103,7 @@ module.exports = {
         let token = await resetTokenManager.getByUUID(id);
 
         if(!token) 
-            throw new Error('invalid token');
+            throw new ResponseError('invalid token', 400);
         
         
         let hashedPassword = await crypt.cryptPassword(newPassword);

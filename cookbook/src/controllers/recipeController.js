@@ -81,6 +81,21 @@ module.exports = {
         let response = await recipeService.cloneRecipe(req.user.id, req.params.id);
 
         res.status(200).json({ type: 'success', body: response });
+    },
+
+    countAll : async function(req, res, next) {
+
+        let response = await recipeService.countAll();
+
+        res.status(200).json({ type: 'success', body: response });
+    },
+
+    mostPopular : async function(req, res, next) {
+
+        let response = await recipeService.getAll({sort: 'popularity'});
+
+        res.status(200).json({ type: 'success', body: response });
+
     }
 
 }

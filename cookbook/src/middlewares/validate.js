@@ -12,7 +12,6 @@ module.exports = function(schema) {
         }
         catch(error) {
             error.status = 400;
-            console.log(error.details);
             next(error);
         }
 

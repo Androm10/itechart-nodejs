@@ -1,4 +1,5 @@
 const userService = require('../services/userService');
+const ResponseError = require('../utils/ResponseError');
 
 
 module.exports = {
@@ -27,6 +28,33 @@ module.exports = {
 
         res.status(201).json({ type: 'success', body: response});
 
+    },
+
+    updateStatus : async function(req, res ) {
+
+        const statusList = ['delete', 'active', 'block'];
+        let status = req.body.status;
+        
+        if(!statusList.includes(status))
+            throw new ResponseError('invalid status', 400);
+
+        let response = await userService.updateStatus(req.params.id, status);
+
+        res.status(201).json({ type: 'success', body: response});
+    },
+
+    getStatusStats : async function(req, res) {
+
+        let response = await userService.getStatusStats();
+
+        res.status(201).json({ type: 'success', body: response});
+    },
+
+    mostActive : async function(req, res) {
+
+        let response = await userService.mostActive();
+
+        res.status(201).json({ type: 'success', body: response});
     }
 
 }

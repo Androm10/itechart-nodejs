@@ -1,0 +1,3 @@
+[submodule "cookbook-nest-js"]
+	path = cookbook-nest-js
+	url = https://github.com/Androm10/cookbook-nest-js
